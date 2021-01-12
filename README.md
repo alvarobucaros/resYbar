@@ -16,7 +16,7 @@ controlles 		controladoras para acceder apis.
 db/data			script para crear la base de datos de pruebas en MySql  o para Sqlite3,
                 esta ultima no está habilitada en una futura versión será la de uso por defecto
 
-db/models		script para crear esquema de MySql en blanco con una empresa de pruebas y el usuario admin/admin@com *Esto está n desarrollo*
+db/models		script para crear esquema de MySql en blanco con una empresa de pruebas y el usuario admin/admin@com *Esto está en desarrollo*
 
 databaseMysql.js Acceso a la base de MySql 
 
@@ -48,10 +48,11 @@ Se ejecuta en el puerto  http://localhost:8000 y presenta la ventana de venta el
 
 http://localhost:8000/admin permite el ingreso al módulo de administración de la aplicación, el usuario puede ser:
 
-tia@com y la contraseña abc  
+tia@com y la contraseña 123  
 
-aoc@com y contraseña aoc
+aoc@com y contraseña 123
 
 juan@com y contraseña 123
 
 implementado con md5 para cifrar la clave
+
