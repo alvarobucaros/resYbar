@@ -1,0 +1,60 @@
+.contenedor{
+    background: #b7bec5;
+    top: 0;
+    display: fixed;
+    left: 0;
+    width: 60%;
+    height: auto;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .modal{
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    margin: 40px auto;
+    
+  }
+  .modalForm{
+    background: #0082A2;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 15px;
+    height: 100%;
+  }
+  .modalHeader{
+    background: #007e9e;
+    margin: 10px;
+    text-align: center;
+    font-size: 1.2em ;
+    border-radius: 15px;
+    width: 95%;
+  }
+  .modalHeader > h3{
+    text-align: center;
+    color: #FFF;
+  }
+  .close{
+    background: #000;
+    color: #FFF;
+  }
+  .modalConten{
+    font-size: 1.2em ;
+  }
+  .btn1 {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(202, 94, 94, 0.19);
+  }
+  .derecha{
+    float: right;
+  }
+  .izquierda{
+    float: left;
+    color:#FFF;
+    text-align: center;
+  } 
+  
+  .clear{
+    float: right;
+  }

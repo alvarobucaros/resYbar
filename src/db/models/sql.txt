@@ -1,0 +1,7 @@
+SELECT column_name, ': DataTypes.' as tipo, data_type, CASE data_type WHEN 'int' THEN 'INTEGER,'
+WHEN 'decimal' THEN concat('DECIMAL(',numeric_precision,',',numeric_scale,')') 
+WHEN 'char' THEN character_maximum_length 
+WHEN 'varchar' THEN character_maximum_length  WHEN 'text' THEN character_maximum_length 
+WHEN 'date' THEN ''  WHEN 'datetime' THEN ''  end AS forma
+FROM information_schema.columns WHERE table_schema = 'nodejs' AND 
+ table_name = 'clientes' ORDER BY ordinal_position;

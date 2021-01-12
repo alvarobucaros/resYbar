@@ -1,0 +1,59 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div class='container'>
+    <div id="contact-form" class="myform">
+        <h3 class='text-left'>{{form_title}}</h3>
+        <section class='myFormGen'>
+           
+        
+            <div v-if="isSending" class="loading">Enviando...</div>
+        <!-- 
+            https://codesource.io/sending-emails-with-vuejs-and-nodemailer/ 
+            https://stackoverflow.com/questions/46851977/don-t-know-how-to-use-emailjs-with-vuejs
+        -->
+        <form class="form" @submit="onSubmit">
+            <br>
+            <div class='myDiv'>
+                <div>
+                <label for='name' >{{lblct_name}}</label> 
+                <input v-model='contact.name'  type='text' class='4u 12u(mobile)'
+                required placeholder="Su nombre..." name ='name'> 
+                </div>
+            </div>
+            <div class='myDiv'>
+                <div>
+                <label for='celular' >{{lblct_celular}}</label> 
+                <input v-model='contact.celular'  type='text' class='4u 12u(mobile)'
+                required placeholder="Su nombre..." name ='celular'> 
+                </div>
+            </div>            
+            <div class='myDiv'>
+                <div>
+                <label for='email' >{{lblct_email}}</label> 
+                <input v-model='contact.email'  type='email' class='4u 12u(mobile)'
+                required placeholder="Su correo electrónico..." name ='email'> 
+                </div>
+            </div>            
+            <div class='myDiv'>
+                <div>
+                <label for='mensaje' >{{lblct_message}}</label>   
+                <div>          
+                <textarea name="mensaje" v-model="contact.message" rows="3" cols="80" placeholder="Mensaje"></textarea>
+                </div>
+            </div>
+            </div>
+        <button class='btn btn-primary  btn-xs'>{{btn_send}}</button>
+        <br>
+        </form>
+    </section>
+    </div>
+</div>
+
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.4/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+<script src="/ctrl/contact.js"></script>
+<%- include ('partials/fin')%>

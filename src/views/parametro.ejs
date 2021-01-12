@@ -1,0 +1,130 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div id='appparametros' class='container'>
+    <h3 class='text-left'>{{form_title}}</h3>
+    <!-- Formulario para adicionar parametross  -->
+    <section class='myFormGen'>
+        <form  id='idForm' form action="/subirNada" method="post" enctype="multipart/form-data" >     
+            <div class='myform '>
+                <br>
+                <div class='myDiv' style='display: none'>
+                    <label for='id' >{{lblid}}</label> 
+                    <input v-model='rec.id'  type='text' class='4u 12u(mobile)' name ='id'> 
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='pm_idempresa' >{{lblpm_idempresa}}</label> 
+                    <input v-model='rec.pm_idempresa'  type='text' class='4u 12u(mobile)' name ='pm_idempresa'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='pm_representante' >{{lblpm_representante}}</label> 
+                    <input v-model='rec.pm_representante'  type='text' class='4u 12u(mobile)' name ='pm_representante'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='pm_web' >{{lblpm_web}}</label> 
+                    <input v-model='rec.pm_web'  type='text' class='4u 12u(mobile)' name ='pm_web'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='pm_email' >{{lblpm_email}}</label> 
+                    <input v-model='rec.pm_email'  type='email' class='4u 12u(mobile)' name ='pm_email'> 
+                    </div>
+                </div>
+                <div class='myDiv'> 
+                    <div>
+                    <label for='pm_banco' >{{lblpm_banco}}</label> 
+                    <input v-model='rec.pm_banco'  type='text' class='4u 12u(mobile)' name ='pm_banco'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='pm_cuenta' >{{lblpm_cuenta}}</label> 
+                    <input v-model='rec.pm_cuenta'  type='text' class='4u 12u(mobile)' name ='pm_cuenta'> 
+                    </div>
+                </div>
+            
+                <div class='myDiv'>
+                    <div>
+                    <label for='pm_whatsapp' >{{lblpm_whatsapp}}</label> 
+                    <input v-model='rec.pm_whatsapp'  type='text' class='4u 12u(mobile)' name ='pm_whatsapp'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='pm_facebook' >{{lblpm_facebook}}</label> 
+                    <input v-model='rec.pm_facebook'  type='text' class='4u 12u(mobile)' name ='pm_facebook'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='pm_instagram' >{{lblpm_instagram}}</label> 
+                    <input v-model='rec.pm_instagram'  type='text' class='4u 12u(mobile)' name ='pm_instagram'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='pm_twitter' >{{lblpm_twitter}}</label> 
+                    <input v-model='rec.pm_twitter'  type='text' class='4u 12u(mobile)' name ='pm_twitter'> 
+                    </div>
+                </div>                                                
+                <div class='myDiv'>
+                    <div>
+                        <label for='pm_tipocuenta' class='labeles'>{{lblpm_tipocuenta}}</label>
+                        <div> 
+                            <input type='radio' name='pm_tipocuenta' v-model='rec.pm_tipocuenta' value='A'>{{lblpm_tipocuenta0}} 
+                            <input type='radio' name='pm_tipocuenta' v-model='rec.pm_tipocuenta' value='C'>{{lblpm_tipocuenta1}} 
+                        </div>
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='pm_logo' >{{lblpm_logo}}</label> 
+                    <input v-model='rec.pm_logo'  type='text' class='4u 12u(mobile)' name ='pm_logo'>
+                    </div>
+                    <div>
+                        <img v-bind:src="'logos/' + rec.pm_logo" width="150" title="logo2"/>            
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                        <input type="file" name="logoimagen" id="logoimagen" 
+                        @change='handleAttachment($event)' >
+                        <button class='btn btn-primary  btn-xs'>{{form_btnSubir}}</button>
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='pm_consecpedido' >{{lblpm_consecpedido}}</label> 
+                    <input v-model='rec.pm_consecpedido'  type='text' class='4u 12u(mobile)' name ='pm_consecpedido'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                <div>
+                    <label for='pm_consecfactura' >{{lblpm_consecfactura}}</label> 
+                    <input v-model='rec.pm_consecfactura'  type='text' class='4u 12u(mobile)' name ='pm_consecfactura'> 
+                    </div>
+                </div>
+                <br>
+                 <button @click='crear()' class='btn btn-primary  btn-xs'>{{form_btnActualiza}}</button>
+                
+                 <div  style='display: none'>
+                     <input v-model='rec.id' type='text'  name='id' >
+                 </div>
+            </div> 
+        </form>
+    </section>
+
+</div>
+
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<script src='/ctrl/parametro.js'></script>
+<%- include ('partials/fin')%>
+

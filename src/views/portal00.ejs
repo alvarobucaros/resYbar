@@ -1,0 +1,221 @@
+
+<%- include ('partials/head2')%>
+<div class="grid-container">
+    <div id="logo" class="imagenTit"> <img v-bind:src="imagen"   ></div>
+    <div class="item1">
+        <h1>{{rec.data[0].em_nombre}}</h1>
+        <h4 class="text-tit">{{rec.data[0].em_sloganppal}}</h4>
+        <h4 class="text-tit">{{rec.data[0].em_slogansec}}</h4>
+    </div>
+    
+    <div class="tipos">
+        <div id='combo'>
+            <label for="tipos">Tipo de artículo</label>
+            <select v-model="tipos" name="tipos" id="tipos" 
+            @change="cambiaTipo()" class="form-control" tabindex="12">
+            <option v-for="item in datos.data" :key="item.tp_codigo"> {{item.tp_codigo }} </option>
+            </select>  
+        </div>
+    </div>
+ 
+    <div class="item2">
+        <!-- <button @click='inicio()' class='btn'>{{form_btnInicio}}</button> -->
+        <button @click='miEmpresa()' class='btn'>{{form_btnEmpresa}}</button>
+        <button @click='contactos=true' class='btn'>{{form_btnContactos}}</button>
+    </div>
+  
+    <div id="carrito" class="carrito">
+        <img v-bind:src="imgCarrito" @click='miCarrito()' >{{form_misCompras}}
+    </div>
+    <div id='main' class="item3"  @click='productos=true'>       
+        <div v-for="item in prods.data" :key="item.id" class="gallery">  
+            <div class="galle">
+                <span>{{item.pr_codigo}}</span>
+                <h5>{{item.pr_titulo}}</h5>
+                <a href='#' data-caption="Golden">
+                    <img v-bind:src="'img/' + item.pr_idTipo + '/' + item.pr_foto" alt="logo" 
+                        width="150" height="150">  
+                    <br>
+                    <span @click='muestraImagenes(item)'>Ver detalles</span>
+                </a>
+                <h4>{{formatValue(item.pr_precio)}}</h4>
+                <div  style='display: none'>{{item.id}}{{item.pr_tipoproductoId}}</div>
+            </div>
+        </div>
+    </div> 
+
+    <div id="detalles" class="contenedor btn1" v-if='detalles'>
+    <div class="modal">
+        <div class="modalHeader">
+            <!-- <div class="izquierda"><h3>DETALLES</h3> 
+            </div> -->
+            <button class='derecha' @click='detalles=false'>X</button>
+            <br>            
+        </div> 
+        <form class="form">  
+            <div class="myDiv">
+                <div class="izq">
+                    <td><img v-bind:src="pr_foto" v-bind:alt="pic" width="150" height="150"></td>
+                    <br>
+                    <td class="descripcion">{{pr_descipcion}}</td>
+                </div>   
+                <div class="der">
+                    <h3>Producto: {{pr_idTipo}}</h3>                   
+                    <h3>Tipo: {{pr_titulo}}</h3>
+                    <h3>Marca: {{pr_marca}}</h3>
+                    <h3>Referencia: {{pr_referencia}}</h3>                    
+                    <h3>Precio: {{pr_precio}}</h3>
+                    <h3>Descuento: {{descuento}}</h3>
+                    <h3>IVA: {{pr_iva}} %</h3>
+                    <h3>Valor IVA: {{vlrIva}}</h3>
+                    <h3>Neto: {{neto}}</h3>
+                </div>  
+            </div>
+        </form> 
+        </div>
+        <div>
+            <label for='carCantidad' >{{carNro}}</label>
+            <input v-model='carcantidad'  type='text' class='4u 12u(mobile)'
+            required placeholder="Cantidad" name ='carCantidad'> 
+            <button class='btn' @click='addCar()'>{{carAdd}}</button>
+        </div>
+    </div>
+
+    <div id="empresas" class="contenedor btn1" v-if='empresas'>
+    <div class="modal">
+        <div class="modalHeader">
+            <div class="izquierda"><h3>NUESTRA EMPRESA</h3> </div>
+            <button class='derecha' @click='empresas=false'>X</button>
+           <br>
+        </div>
+        <br>
+        <div class="modalConten">
+            <form class="form">
+                <h4>{{empre.data[0].em_nombre}}</h4>
+                <h4>Dirección: {{empre.data[0].em_direccion}}</h4>
+                <h4>Ubicación: {{empre.data[0].em_barrio}}</h4>
+                <h4>Teléfono: {{empre.data[0].em_telefono}}</h4>
+                <h4>Ciudad: {{empre.data[0].em_ciudad}}</h4>
+                <h4>E-mail: {{empre.data[0].em_email}}</h4>
+                <h4>Nit: {{empre.data[0].em_nit}}</h4>
+                <h4>{{empre.data[0].em_observaciones}}</h4>  
+            </form>           
+        </div>
+    </div>
+</div>
+<div id="contactos" class="contenedor  btn1" v-if='contactos'>
+    <div class="modal">
+        <div class="modalHeader">
+            <div class="izquierda"><h3>CONTACTENOS</h3> 
+            </div>
+            <button class='derecha' @click='contactos=false'>X</button>
+            <br>
+            <h3>Déjenos sus inquietudes o sugerencias...</h3>
+        </div>  
+        
+        <br>
+        <div class="modalConten">
+            <form class="form" @submit="onSubmit">
+                <br>
+                <div class='myDiv'>
+                    <div>
+                    <label for='name' >{{lblct_name}}</label> 
+                    <input v-model='contact.name'  type='text' class='4u 12u(mobile)'
+                    required placeholder="Su nombre..." name ='name'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='celular' >{{lblct_celular}}</label> 
+                    <input v-model='contact.celular'  type='text' class='4u 12u(mobile)'
+                    required placeholder="Teléfono d contacto..." name ='celular'> 
+                    </div>
+                </div>            
+                <div class='myDiv'>
+                    <div>
+                    <label for='email' >{{lblct_email}}</label> 
+                    <input v-model='contact.email'  type='email' class='4u 12u(mobile)'
+                    required placeholder="Su correo electrónico..." name ='email'> 
+                    </div>
+                </div>            
+                <div class='myDiv'>
+                    <div>
+                    <label for='mensaje' >{{lblct_message}}</label>                              
+                    <textarea name="mensaje" v-model="contact.message" rows="3" cols="80" placeholder="Mensaje"></textarea>
+                </div>
+                </div>
+            <button class='btn btn-primary  btn-xs'>{{btn_send}}</button>
+            <br>
+            </form>
+        </div>
+    </div>
+</div>    
+
+<div id='carcito' class="contenedor btn1" v-if='carcito'>
+    <div class="modal">
+        <form class="form"> 
+            <button class='derecha' @click='carcito=false'>X</button>
+            <table id='tabla' class="tabla">
+                <tr>
+                    <th>Foto</th>
+                    <th>Detalle</th>
+                    <th>cantidad</th>
+                    <th>valor</th>
+                    <th>Sub total</th>
+                </tr>
+                <tr v-for="(item, index) in this.arrCar">
+                    <td><img v-bind:src="item.pr_foto" v-bind:alt="pic" width="70" height="60"></td>
+                    <td>{{item.pr_descipcion}}</td>
+                    <td>{{item.carcantidad}}</td>
+                    <td>{{formatValue(item.neto)}}</td>    
+                    <td>{{formatValue(item.carcantidad * item.neto)}}</td> 
+                    <td><button @click="borraCarrito(item)"
+                        class='btn btn-danger  btn-xs'>{{form_btnDelete}} </button></td>
+                </tr> 
+            </table>
+            <label for="">Total compra : $</label><span>{{formatValue(subNeto)}}</span>
+            <button class='izquierda btn btn-primary  btn-xs' @click='hacePedido()'>{{form_btnHacePedido}}</button>
+           <div class="clnte" id="clnte" v-if='seen' >
+                <div>
+                <label for='cl_tipodocumento' class='labeles'>{{lblcl_tipodocumento}}</label> 
+                <input type='radio' name='cl_tipodocumento' v-model='cl_tipodocumento' value='C'>{{lblcl_tipodocumento0}} 
+                <input type='radio' name='cl_tipodocumento' v-model='cl_tipodocumento' value='E'>{{lblcl_tipodocumento1}} 
+                <input type='radio' name='cl_tipodocumento' v-model='cl_tipodocumento' value='N'>{{lblcl_tipodocumento2}} 
+                <input type='radio' name='cl_tipodocumento' v-model='cl_tipodocumento' value='P'>{{lblcl_tipodocumento3}} 
+               </div>
+               <div>
+                <label for='cl_documentoid' class='labeles'>{{lblcl_documentoid}}</label> 
+                <input v-model='cl_documentoid'  type='text' class='formControl' name ='cl_documentoid'> 
+               </div>
+               <button class='btn btn-primary  btn-xs' @click='valiCliente()'>{{form_btnContinua}}</button>
+           </div>
+        </form>
+       
+    </div>
+</div>
+
+    <div class="footer1">
+        <h4 class="text-tit">{{rec.data[0].em_direccion}}  {{rec.data[0].em_ciudad}} {{rec.data[0].em_barrio}} </h4>
+        <h4 class="text-tit">Correo electrónico: {{rec.data[0].em_email}} </h4>
+        <h4 class="text-tit">NIT: {{rec.data[0].em_nit}} </h4>
+       
+    </div>
+    <div class="footer2">
+        Teléfono: {{rec.data[0].em_telefono}}
+        <a :href="`tel:${rec.data[0].pm_web}`"> {{rec.data[0].pm_web}}</a>
+       
+        <a v-bind:href="`{{ rec.data[0].pm_whatsapp }}`">
+            <img src="/logos/whats.png" alt="logo" ></a>
+        <a v-bind:href="`{{ rec.data[0].pm_facebook }}`">
+            <img src="/logos/fase.png" alt="logo" ></a>  
+        <a v-bind:href="`{{ rec.data[0].pm_instagram }}`">
+            <img src="/logos/insta.png" alt="logo" ></a>
+        <a v-bind:href="`{{ rec.data[0].pm_twitter }}`">
+            <img src="/logos/twitt.png" alt="logo" ></a>                  
+    </div>
+  </div>
+
+</div>
+<%- include ('partials/foot1')%>
+<script src='/ctrl/portal00.js'></script>
+<%- include ('partials/fin')%>

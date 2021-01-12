@@ -1,0 +1,125 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div id='appcustomex' class='container'>
+    <h3 class='text-left'>{{form_title}}</h3>
+    <nav>
+        <button @click='nuevo()' class='btn btn-primary  btn-xs'>{{form_btnNuevo}}</button>
+    </nav>
+    <!-- Formulario para adicionar customexs -->
+    
+    <div id="formulario" class="contenedor  btn1" v-if='formulario'> 
+        <div class="modalForm">
+        <button class='derecha' @click='formulario=false'> X </button>
+        <div>
+            <label for='id' class='labeles'>{{lblid}}</label> 
+            <input v-model='id'  type='text' class='form-control col-md-6' name ='id'> 
+        </div>
+        <div>
+            <label for='name' class='labeles'>{{lblname}}</label> 
+            <input v-model='name'  type='text' class='form-control col-md-6' name ='name'> 
+        </div>
+        <div>
+            <label for='address' class='labeles'>{{lbladdress}}</label> 
+            <input v-model='address'  type='text' class='form-control col-md-6' name ='address'> 
+        </div>
+        <div>
+            <label for='phone' class='labeles'>{{lblphone}}</label> 
+            <input v-model='phone'  type='text' class='form-control col-md-6' name ='phone'> 
+        </div>
+        <div>
+        <label for='empresa' class='labeles'>{{lblempresa}}</label> 
+        <input v-model='empresa'  type='text' class='form-control col-md-6' name ='empresa'> 
+        </div>
+        <br>
+        <button @click='formulario=false' class='derecha'>{{form_btnAnula}}</button>
+        <button @click='crear()' class='derecha'>{{form_btnActualiza}}</button>        
+        <div  style='display: none'>
+            <input v-model='id' type='text'  name='id' >
+        </div>
+   
+    </div>
+
+
+
+
+
+        <div class="modal">
+            <div class="modalConten">
+            <form  class='form'>
+                <div class='myDiv'>                    
+                    <!-- <div>
+                        <label for='id' class='labeles'>{{lblid}}</label> 
+                        <input v-model='id'  type='text' class='form-control col-md-6' name ='id'> 
+                    </div>
+                    <div>
+                    <label for='name' class='labeles'>{{lblname}}</label> 
+                    <input v-model='name'  type='text' class='form-control col-md-6' name ='name'> 
+                    </div>
+                    <div>
+                    <label for='address' class='labeles'>{{lbladdress}}</label> 
+                    <input v-model='address'  type='text' class='form-control col-md-6' name ='address'> 
+                    </div>
+                    <div>
+                    <label for='phone' class='labeles'>{{lblphone}}</label> 
+                    <input v-model='phone'  type='text' class='form-control col-md-6' name ='phone'> 
+                    </div>
+                    <div>
+                    <label for='empresa' class='labeles'>{{lblempresa}}</label> 
+                    <input v-model='empresa'  type='text' class='form-control col-md-6' name ='empresa'> 
+                    </div>
+                    <br>
+                    <button @click='crear()' class='btn btn-primary  btn-xs'>{{form_btnActualiza}}</button>
+                    <button @click='formulario=false' class='btn btn-primary  btn-xs'>{{form_btnAnula}}</button>
+                    <div  style='display: none'>
+                        <input v-model='id' type='text'  name='id' >
+                    </div> -->
+                </div> 
+            </form>
+            </div>
+        
+        </div>
+    </div>
+    <!-- Tabla donde se muestran los datos paginacion -->
+    <section class='data'>
+        {{form_busqueda}}<input type='text' v-model='searchKey'>
+        <button @click='busca()' class='btn btn-primary  btn-xs'>{{form_btnBuscar}}</button> 
+       <table id='tabla' class='table'>
+           <thead>
+               <tr  class=' btn-primary'>
+              <!-- <th scope='col'>ID</th> -->
+              <th @click="sorter('name')" scope='col'>NAME</th>
+              <th @click="sorter('address')" scope='col'>ADDRESS</th>
+              <th @click="sorter('phone')" scope='col'>PHONE</th>
+              <!-- <th @click="sort('name')" scope='col'>EMPRESA</th> -->
+            </tr>
+            </thead>
+            <tbody v-if='datos.data.length > 0'
+             v-for='(item, index) in datos.data' :key='item.id'> 
+             <tr :id='item.id'>
+              <!-- <td>{{item.id}}</td> -->
+              <td>{{item.name}}</td>
+              <td>{{item.address}}</td>
+              <td>{{item.phone}}</td>
+              <!-- <td>{{item.empresa}}</td> -->
+                <td><button @click="selectOpcion(item,'B')"
+                    class='btn btn-danger  btn-xs'>{{form_btnDelete}} </button></td>
+                <td><button @click="selectOpcion(item,'E')" 
+                    class='btn btn-primary  btn-xs' >{{form_btnEdita}} </button></td>
+            </tr>
+           </tbody>
+        </table>
+    
+    <!-- <div> <button type='button' class='btn btn-primary  btn-xs'  @click='otraPage(1)'> Siguiente  </button>
+            <button type='button' class='btn btn-primary  btn-xs'  @click='otraPage(0)'> ir a  </button>
+            <button type='button' class='btn btn-primary  btn-xs'  @click='otraPage(-1)'> Anterior </button></div> -->
+
+    </section>
+</div>
+
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<script src='/ctrl/customex.js'></script>
+<%- include ('partials/fin')%>
+

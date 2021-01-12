@@ -1,0 +1,90 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div id="appTipos" class="container" >
+    <h2 class="text-left">{{form_title}}</h2>
+    <nav>
+        <button @click="nuevo()" class="btn btn-primary  btn-xs">{{form_btnNuevo}}</button>
+    </nav>
+    <!-- Formulario para añadir Tipos -->
+    <section id="form" class="form">
+        <form  id="idForm" hidden="" >
+            <div class="myform col-md-8">
+                <br>
+                <div>
+                    <label for="tp_codigo" class="labeles">{{lbltp_codigo}}</label> 
+                    <input v-model="tp_codigo"  type="text" class="form-control col-md-4"
+                    name ="tp_codigo" :placeholder="lbltp_codigo"  >
+                </div>
+                <div>
+                    <label for="tp_descipcion" class="labeles">{{lbltp_descipcion}} 
+                    <input v-model="tp_descipcion" type="text" class="form-control col-md-6" 
+                    name="tp_descipcion" :placeholder="lbltp_descipcion"  ></label>
+                </div>
+                <div> 
+                    <label for="tp_estado" class="labeles">{{lbltp_estado}}</label> 
+                    <br>
+                    <input type="radio" name="tp_estado" v-model="tp_estado" value="A">{{lbltp_estadoA}}   
+                    <input type="radio" name="tp_estado" v-model="tp_estado" value="I">{{lbltp_estadoI}}
+                </div>
+                <br>
+                <button @click="crear()" class="btn btn-primary  btn-xs">{{form_btnActualiza}}</button>
+                <button @click="formToggle()" class="btn btn-primary  btn-xs">{{form_btnAnula}}</button>
+                <div  style='display: none'>
+                    <input v-model="tp_idEmpresa" type="text"  name="tp_idEmpresa">
+                    <input v-model="id" type="text"  name="id" >
+                </div>
+            </div> 
+        </form>
+    </section>
+    <!-- Tabla donde se muestran los datos paginacion https://jsfiddle.net/os7hp1cy/48/ -->
+    <section class="data">
+        {{form_busqueda}}<input type="text" v-model="searchKey">
+        <button @click="busca()" class="btn btn-primary  btn-xs">{{form_btnBuscar}}</button> 
+        <table id='tabla' class="table">
+            <thead>
+                <tr  class=" btn-primary">
+                    <th scope="col">Código</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Estado</th>
+                    <th colspan="2">Comandos</th>
+                </tr>
+            </thead>
+            <tbody v-if="datos.data.length > 0"
+                v-for="(item, index) in datos.data" :key="item.id">                
+                <tr :id="item.id">
+                        <td>{{item.id}}</td>
+                        <td>{{item.tp_idEmpresa}}</td>
+                        <td>{{item.tp_codigo}}</td>
+                        <td>{{item.tp_descipcion}}</td>
+                        <td>{{item.tp_estado}}</td>  
+                        <td><button @click="borrar = true; selectOpcion(item,'B')"
+                            class="btn btn-danger  btn-xs">{{form_btnDelete}} </button></td>
+					    <td><button @click="editar = true; selectOpcion(item,'E')" 
+                            class="btn btn-primary  btn-xs" >{{form_btnEdita}} </button></td>
+                      <!--  <td :id="index+1"> <button @click="borrar()" class="btn btn-danger  btn-xs">{{form_btnDelete}}</button>
+                        <button @click="editar(item.id )" class="btn btn-primary  btn-xs">{{form_btnEdita}}</button></td> -->
+                        </td>  
+                </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <button type="button" class="page-link" v-if="page != 1" @click="page--"> Previous </button>
+                </li>
+                <li class="page-item">
+                    <button type="button" class="page-link" v-for="pageNumber in pages.slice(page-1, page+5)" @click="page = pageNumber"> {{pageNumber}} </button>
+                </li>
+                <li class="page-item">
+                    <button type="button" @click="page++" v-if="page < pages.length" class="page-link"> Next </button>
+                </li> 
+            </ul>
+        </nav>
+    </section>
+</div>
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<script src="/ctrl/tipos.js"></script>
+<%- include ('partials/fin')%>

@@ -1,0 +1,116 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div id='apppruebas' class='container'>
+    <h3 class='text-left'>{{form_title}}</h3>
+    <nav>
+        <button @click='nuevo()' class='btn btn-primary  btn-xs'>{{form_btnNuevo}}</button>
+    </nav>
+    <!-- Formulario para adicionar pruebass -->
+    <section class='form'>
+        <form  id='idForm' hidden=''>
+            <div class='myform col-md-8'>
+                <br>
+                <div>
+                 <label for='id' class='labeles'>{{lblid}}</label> 
+                <input v-model='id'  type='text' class='form-control col-md-6' name ='id'> 
+                <div>
+                 <label for='pr_codigo' class='labeles'>{{lblpr_codigo}}</label> 
+                 <input v-model='pr_codigo'  type='text' class='form-control col-md-6' name ='pr_codigo'> 
+                <div>
+                 <label for='pr_detalle' class='labeles'>{{lblpr_detalle}}</label> 
+                 <input v-model='pr_detalle'  type='text' class='form-control col-md-6' name ='pr_detalle'> 
+                <div>
+                 <label for='pr_estado' class='labeles'>{{lblpr_estado}}</label> 
+                 <input v-model='pr_estado'  type='text' class='form-control col-md-6' name ='pr_estado'> 
+                <div>
+                 <label for='pr_radios' class='labeles'>{{lblpr_radios}}</label> 
+                 <input type='radio' name='pr_radios' v-model='pr_radios' value='0'>{{lblpr_radios0}} 
+                 <input type='radio' name='pr_radios' v-model='pr_radios' value='1'>{{lblpr_radios1}} 
+                <div>
+                 <label for='pr_hoy' class='labeles'>{{lblpr_hoy}}</label> 
+                 <input v-model='pr_hoy'  type='date' class='form-control col-md-6' name ='pr_hoy'> 
+                <div>
+                 <label for='pr_check' class='labeles'>{{lblpr_check}}</label> 
+                 <input type='checkbox' name='pr_check0' id='pr_check0'
+                 v-model='pr_check' value='0'>{{lblpr_check0}} 
+                 <label for='pr_check0'>pr_check0</label> 
+                 <input type='checkbox' name='pr_check1' id='pr_check1'
+                 v-model='pr_check' value='1'>{{lblpr_check1}} 
+                 <label for='pr_check1'>pr_check1</label> 
+                 <input type='checkbox' name='pr_check2' id='pr_check2'
+                 v-model='pr_check' value='2'>{{lblpr_check2}} 
+                 <label for='pr_check2'>pr_check2</label> 
+                 <input type='checkbox' name='pr_check3' id='pr_check3'
+                 v-model='pr_check' value='3'>{{lblpr_check3}} 
+                 <label for='pr_check3'>pr_check3</label> 
+                <div>
+                 <label for='pr_texto' class='labeles'>{{lblpr_texto}}</label> 
+                <input v-model='pr_texto'  type='text' class='form-control col-md-6' name ='pr_texto'> 
+                <div>
+                 <label for='pr_password' class='labeles'>{{lblpr_password}}</label> 
+                 <input v-model='pr_password'  type='text' class='form-control col-md-6' name ='pr_password'> 
+                <div>
+                 <label for='pr_email' class='labeles'>{{lblpr_email}}</label> 
+                 <input v-model='pr_email'  type='text' class='form-control col-md-6' name ='pr_email'> 
+                <div>
+                 <label for='pr_listadespl' class='labeles'>{{lblpr_listadespl}}</label> 
+                 <input v-model='pr_listadespl'  type='text' class='form-control col-md-6' name ='pr_listadespl'> 
+                 <button @click='crear()' class='btn btn-primary  btn-xs'>{{form_btnActualiza}}</button>
+                 <button @click='formToggle()' class='btn btn-primary  btn-xs'>{{form_btnAnula}}</button>
+                 <div  style='display: none'>
+                     <input v-model='id' type='text'  name='id' >
+                 </div>
+            </div> 
+        </form>
+    </section>
+    <!-- Tabla donde se muestran los datos paginacion -->
+    <section class='data'>
+        {{form_busqueda}}<input type='text' v-model='searchKey'>
+        <button @click='busca()' class='btn btn-primary  btn-xs'>{{form_btnBuscar}}</button> 
+       <table id='tabla' class='table'>
+           <thead>
+               <tr  class=' btn-primary'>
+              <th scope='col'>ID</th>
+              <th scope='col'>CODIGO</th>
+              <th scope='col'>DETALLE</th>
+              <th scope='col'>ESTADO</th>
+              <th scope='col'>RADIOS</th>
+              <th scope='col'>HOY</th>
+              <th scope='col'>CHECK</th>
+              <th scope='col'>TEXTO</th>
+              <th scope='col'>PASSWORD</th>
+              <th scope='col'>EMAIL</th>
+              <th scope='col'>LISTADESPL</th>
+            </thead>
+            <tbody>
+                <% if (data) { %>
+                     <% for (var i=0; i < data.length; i++) { %>
+                          <tr id=<%= data[i].id%>>
+               <td><%= data[i].id%></td>
+               <td><%= data[i].pr_codigo%></td>
+               <td><%= data[i].pr_detalle%></td>
+               <td><%= data[i].pr_estado%></td>
+               <td><%= data[i].pr_radios%></td>
+               <td><%= data[i].pr_hoy%></td>
+               <td><%= data[i].pr_check%></td>
+               <td><%= data[i].pr_texto%></td>
+               <td><%= data[i].pr_password%></td>
+               <td><%= data[i].pr_email%></td>
+               <td><%= data[i].pr_listadespl%></td>
+                          <td> <button @click='borrar(<%= data[i].id%>)' class='btn btn-danger  btn-xs'>{{form_btnDelete}}</button>
+                          <button @click='editar(<%= data[i].id%>)' class='btn btn-primary  btn-xs'>{{form_btnEdita}}</button></td>
+                           </tr>
+                     <% } %>
+                <% } %>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<script src='/ctrl/prueba.js'></script>
+<%- include ('partials/fin')%>
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>combo</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id='main'>
+        <div id='rumba'>
+            <h5>combo</h5>    
+            <h1>{{titulo}}</h1>
+            <combo titulito='titulito' nota='notas'></combo>
+            <home></home>    
+            <input_text  aviso='Dirección del socio'></input_text>
+            <about v_bind:nota='Título del alvaro' v_bind:campo='campo1'></about>
+            <about v_bind:nota='label del Ortiz' v_bind:campo='campo2'></about>
+            <base_input v_bind:label='mi etiqueta'></base_input>
+        </div>
+        <div id='combo'>
+            <label for="tipos">Tipo de artículo</label>
+            <select v-model="tipos" name="tipos" id="tipos" class="form-control" tabindex="12">
+            <option v-for="item in datos.data" :key="item.tp_codigo"> {{item.tp_descipcion }} </option>
+            </select>    
+        </div>
+        <button @click='ver()' class='btn btn-primary  btn-xs'>{{form_btnActualiza}}</button>
+
+        <button @click='miCarga()' class='btn btn-primary  btn-xs'>Cargar</button>
+    </div>
+</body>
+<script src="/ctrl/combo.js"></script>
+
+</html>

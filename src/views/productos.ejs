@@ -1,0 +1,171 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div id='appproductos' class='container'>
+    <h3 class='text-left'>{{form_title}}</h3>
+    <nav>
+        <button @click='nuevo()' class='btn btn-primary  btn-xs'>{{form_btnNuevo}}</button>
+        <button @click='imagges()' class='btn btn-primary  btn-xs'>{{form_btnImagges}}</button>
+    </nav>
+
+    <div id='formulario' class='myFormGen' v-if='formulario'> 
+        <form  form action="/productos" method="post" id='idForm' enctype="multipart/form-data" >         
+        <div  class="frmData">
+            <button class='derecha' @click='formulario=false'> X </button>
+            <br>
+ 
+                <div class="input-field col s12">
+                    <label for="seleccionado"  class='labeles'>{{lblpr_idtipo}}</label>
+                    <select v-model="seleccionado" id="seleccionado"  @change="cambiaTipo()">
+                    <option v-for="elemento in tipoproductos.data" v-bind:value="elemento.tp_codigo">{{ elemento.tp_descipcion }}</option>
+                    </select>             
+                </div>
+                <div class="input-field col s12">
+                 <label for = 'pr_codigo' class='labeles'>{{lblpr_codigo}}</label>                 
+                 <input v-model='pr_codigo'  type='text' class='formControl' id ='pr_codigo'> 
+                </div>
+                
+                 <div class="input-field ">
+                 <label for='pr_descipcion' class='labeles'>{{lblpr_descipcion}}</label> 
+                <input v-model='pr_descipcion'  type='text' class='formControl' id ='pr_descipcion'> 
+                </div>
+                <div>
+                 <label for='pr_foto' class='labeles'>{{lblpr_foto}}</label> 
+                 <input v-model='pr_foto'  type='text' class='formControl' id ='pr_foto'>
+                 <div>
+                    <img v-bind:src="getImgUrlOne()" width="150" title="foto"/>            
+                </div> 
+                <div>
+                    <input type="file" name="logoimagen" id="logoimagen" 
+                    @change='handleAttachment($event)'>
+                    <button class='btn btn-primary  btn-xs'>{{form_btnSubir}}</button>
+                </div>
+                </div>
+                <div>
+                 <label for='pr_diasventa' class='labeles'>{{lblpr_diasventa}}</label> 
+                 <input v-model='pr_diasventa'  type='text' class='formControl' id ='pr_diasventa'> 
+                </div>
+                <div>
+                 <label for='pr_precio' class='labeles'>{{lblpr_precio}}</label> 
+                <input v-model='pr_precio'  type='text' class='formControl' id ='pr_precio'> 
+                </div>
+                <div>
+                 <label for='pr_inventario' class='labeles'>{{lblpr_inventario}}</label> 
+                <input v-model='pr_inventario'  type='text' class='formControl' id ='pr_inventario'> 
+                </div>
+                <div>
+                 <label for='pr_existencias' class='labeles'>{{lblpr_existencias}}</label> 
+                <input v-model='pr_existencias'  type='text' class='formControl' name ='pr_existencias'> 
+                </div>
+                <div>
+                 <label for='pr_descpesos' class='labeles'>{{lblpr_descpesos}}</label> 
+                <input v-model='pr_descpesos'  type='text' class='formControl' name ='pr_descpesos'> 
+                </div>
+                <div>
+                 <label for='pr_descporcentaje' class='labeles'>{{lblpr_descporcentaje}}</label> 
+                <input v-model='pr_descporcentaje'  type='text' class='formControl' name ='pr_descporcentaje'> 
+                </div>
+                <div>
+                 <label for='pr_iva' class='labeles'>{{lblpr_iva}}</label> 
+                <input v-model='pr_iva'  type='text' class='formControl' name ='pr_iva'> 
+                </div>
+                <div>
+                 <label for='pr_marca' class='labeles'>{{lblpr_marca}}</label> 
+                 <input v-model='pr_marca'  type='text' class='formControl' name ='pr_marca'> 
+                </div>
+                <div>
+                 <label for='pr_referencia' class='labeles'>{{lblpr_referencia}}</label> 
+                 <input v-model='pr_referencia'  type='text' class='formControl' name ='pr_referencia'> 
+                </div>
+                <div>
+                 <label for='pr_estado' class='labeles'>{{lblpr_estado}}</label> 
+                 <input type='radio' name='pr_estado' v-model='pr_estado' value='A'>{{lblpr_estado0}} 
+                 <input type='radio' name='pr_estado' v-model='pr_estado' value='I'>{{lblpr_estado1}} 
+                </div>
+                <div>
+                <button @click='formulario=false' class='izquierda  btn-primary'>{{form_btnAnula}}</button>
+                <button @click='crear()' class='izquierda btn-primary'>{{form_btnActualiza}}</button>  
+                </div>
+                <div  style='display: none'>
+                    <input v-model='id' type='text'  name='id' >
+                    <input v-model='pr_ofertaDesde' type='text'  name='pr_ofertaDesde' >
+                    <input v-model='pr_ofertaHasta' type='text'  name='pr_ofertaHasta' >
+                </div>
+                <br>
+        </div> 
+        </form>
+    </div> 
+ 
+    <!-- Tabla donde se muestran los datos paginacion -->
+    <section class='data'>
+        {{form_busqueda}}<input type='text' v-model='searchKey'>
+        <button @click='busca()' class='btn btn-primary  btn-xs'>{{form_btnBuscar}}</button> 
+       <table id='tabla' class='table'>
+           <thead>
+               <tr  class=' btn-primary'>
+              <!-- <th scope='col'>ID</th>
+              <th scope='col'>IDEMPRESA</th> -->
+              <th scope='col'>TIPO</th>
+              <th scope='col'>CODIGO</th>
+              <th scope='col'>DESCIPCION</th>
+              <th scope='col'>FOTO</th>
+              <th scope='col'>DIAS VENTA</th>
+              <th scope='col'>PRECIO</th>
+              <th scope='col'>INVENTARIO</th>
+              <th scope='col'>EXISTENCIAS</th>
+              <th scope='col'>DESC PESOS</th>
+              <th scope='col'>DESC % </th>
+              <th scope='col'>IVA</th>
+              <th scope='col'>MARCA</th>
+              <th scope='col'>REFERENCIA</th>
+              <th scope='col'>ESTADO</th>
+            </thead>
+            <tbody v-if='datos.data.length > 0'
+             v-for='(item, index) in datos.data' :key='item.id'> 
+             <tr :id='item.pr_estado'>
+               <!-- <td>{{item.id}}</td> 
+              <td>{{item.pr_idempresa}}
+              <td>{{item.pr_tipoproductoId}}</td>  -->
+              <td>{{item.pr_idtipo}}</td>
+              <td>{{item.pr_codigo}}</td>
+              <td>{{item.pr_descipcion}}</td>
+              <td><img v-bind:src="getImgUrl(index)" v-bind:alt="pic" width="70" height="60"></td>
+              <td>{{item.pr_diasventa}}</td>
+              <td>{{item.pr_precio}}</td>
+              <td>{{item.pr_inventario}}</td>
+              <td>{{item.pr_existencias}}</td>
+              <td>{{item.pr_descpesos}}</td>
+              <td>{{item.pr_descporcentaje}}</td>
+              <td>{{item.pr_iva}}</td>
+              <td>{{item.pr_marca}}</td>
+              <td>{{item.pr_referencia}}</td>
+              <td>{{item.pr_estado}}</td>
+			 <td><button @click="borrar = true; selectOpcion(item,'B')"
+				 class='btn btn-danger  btn-xs'>{{form_btnDelete}} </button></td>
+			 <td><button @click="editar = true; selectOpcion(item,'E')" 
+				 class='btn btn-primary  btn-xs' >{{form_btnEdita}} </button></td>
+		  </tr>
+           </tbody>
+        </table>
+        <nav aria-label='Page navigation example'>
+            <ul class='pagination'>
+                <li class='page-item'>
+                    <button type='button' class='page-link' v-if='page != 1' @click='page--'> Previous </button>
+                </li>
+                <li class='page-item'>
+                    <button type='button' class='page-link' v-for='pageNumber in pages.slice(page-1, page+5)' @click='page = pageNumber'> {{pageNumber}} </button>
+                </li>
+                <li class='page-item'>
+                    <button type='button' @click='page++' v-if='page < pages.length' class='page-link'> Next </button>
+                </li> 
+            </ul>
+        </nav>
+    </section>
+</div>
+
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<script src='/ctrl/productos.js'></script>
+<%- include ('partials/fin')%>
+

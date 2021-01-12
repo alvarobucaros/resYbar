@@ -1,0 +1,142 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div id='appusuarios' class='container'>
+    <h3 class='text-left'>{{form_title}}</h3>
+    <nav>
+        <button @click='nuevo()' class='btn btn-primary  btn-xs'>{{form_btnNuevo}}</button>
+    </nav>
+    <div id='formulario' class='myFormGen' v-if='formulario'> 
+        <div class='frmData'>
+        <button class='derecha' @click='formulario=false'> X </button>
+        <br>
+                <!-- <div>
+                 <label for='id' class='labeles'>{{lblid}}</label> 
+                <input v-model='id'  type='text' class='formControl' name ='id'> 
+                </div>
+                <div>
+                 <label for='us_idempresa' class='labeles'>{{lblus_idempresa}}</label> 
+                <input v-model='us_idempresa'  type='text' class='formControl' name ='us_idempresa'> 
+                </div> -->
+                <div>
+                 <label for='us_nombre' class='labeles'>{{lblus_nombre}}</label> 
+                 <input v-model='us_nombre'  type='text' class='formControl' name ='us_nombre'> 
+                </div>
+                <div>
+                 <label for='us_email' class='labeles'>{{lblus_email}}</label> 
+                 <input v-model='us_email'  type='text' class='formControl' name ='us_email'> 
+                </div>
+                <div>
+                 <label for='us_direccion' class='labeles'>{{lblus_direccion}}</label> 
+                 <input v-model='us_direccion'  type='text' class='formControl' name ='us_direccion'> 
+                </div>
+                <div>
+                 <label for='us_zona' class='labeles'>{{lblus_zona}}</label> 
+                 <input v-model='us_zona'  type='text' class='formControl' name ='us_zona'> 
+                </div>
+                <div>
+                 <label for='us_localidad' class='labeles'>{{lblus_localidad}}</label> 
+                 <input v-model='us_localidad'  type='text' class='formControl' name ='us_localidad'> 
+                </div>
+                <div>
+                 <label for='us_barrio' class='labeles'>{{lblus_barrio}}</label> 
+                 <input v-model='us_barrio'  type='text' class='formControl' name ='us_barrio'> 
+                </div>
+                <div>
+                 <label for='us_doctipo' class='labeles'>{{lblus_doctipo}}</label> 
+                 <input type='radio' name='us_doctipo' v-model='us_doctipo' value='C'>{{lblus_doctipo0}} 
+                 <input type='radio' name='us_doctipo' v-model='us_doctipo' value='E'>{{lblus_doctipo1}} 
+                 <input type='radio' name='us_doctipo' v-model='us_doctipo' value='N'>{{lblus_doctipo2}} 
+                 <input type='radio' name='us_doctipo' v-model='us_doctipo' value='P'>{{lblus_doctipo3}} 
+                </div>
+                <div>
+                 <label for='us_docnumero' class='labeles'>{{lblus_docnumero}}</label> 
+                 <input v-model='us_docnumero'  type='text' class='formControl' name ='us_docnumero'> 
+                </div>
+                <div>
+                 <label for='us_telefono' class='labeles'>{{lblus_telefono}}</label> 
+                 <input v-model='us_telefono'  type='text' class='formControl' name ='us_telefono'> 
+                </div>
+                <div>
+                 <label for='us_clave' class='labeles'>{{lblus_clave}}</label> 
+                 <input v-model='us_clave'  type='password' class='formControl' name ='us_clave'> 
+                </div>
+                <div>
+                 <label for='us_estado' class='labeles'>{{lblus_estado}}</label> 
+                 <input type='radio' name='us_estado' v-model='us_estado' value='A'>{{lblus_estado0}} 
+                 <input type='radio' name='us_estado' v-model='us_estado' value='I'>{{lblus_estado1}} 
+                </div>
+                <br>
+             <button @click='formulario=false' class='izquierda  btn-primary'>{{form_btnAnula}}</button>
+             <button @click='crear()' class='izquierda  btn-primary'>{{form_btnActualiza}}</button>  
+                 <div  style='display: none'>
+                     <input v-model='id' type='text'  name='id' >
+                 </div>
+            </div> 
+         </div> 
+    <!-- Tabla donde se muestran los datos paginacion -->
+    <section class='data'>
+        {{form_busqueda}}<input type='text' v-model='searchKey'>
+        <button @click='busca()' class='btn btn-primary  btn-xs'>{{form_btnBuscar}}</button> 
+       <table id='tabla' class='table'>
+           <thead>
+               <tr  class=' btn-primary'>
+              <!-- <th scope='col'>ID</th>
+              <th scope='col'>IDEMPRESA</th> -->
+              <th scope='col'>NOMBRE</th>
+              <th scope='col'>EMAIL</th>
+              <th scope='col'>DIRECCION</th>
+              <th scope='col'>ZONA</th>
+              <th scope='col'>LOCALIDAD</th>
+              <th scope='col'>BARRIO</th>
+              <th scope='col'>TIPO DOC</th>
+              <th scope='col'>NUMERO DOC</th>
+              <th scope='col'>TELEFONO</th>
+              <!-- <th scope='col'>CLAVE</th> -->
+              <th scope='col'>ESTADO</th>
+            </thead>
+            <tbody v-if='datos.data.length > 0'
+             v-for='(item, index) in datos.data' :key='item.id'> 
+             <tr :id='item.us_estado'>
+              <!-- <td>{{item.id}}</td>
+              <td>{{item.us_idempresa}}</td> -->
+              <td>{{item.us_nombre}}</td>
+              <td>{{item.us_email}}</td>
+              <td>{{item.us_direccion}}</td>
+              <td>{{item.us_zona}}</td>
+              <td>{{item.us_localidad}}</td>
+              <td>{{item.us_barrio}}</td>
+              <td>{{item.us_doctipo}}</td>
+              <td>{{item.us_docnumero}}</td>
+              <td>{{item.us_telefono}}</td>
+              <!-- <td>{{item.us_clave}}</td> -->
+              <td>{{item.us_estado}}</td>
+            <td><button @click="borrar = true; selectOpcion(item,'B')"
+                class='btn btn-danger  btn-xs'>{{form_btnDelete}} </button></td>
+            <td><button @click="editar = true; selectOpcion(item,'E')" 
+                class='btn btn-primary  btn-xs' >{{form_btnEdita}} </button></td>
+                </tr>
+           </tbody>
+        </table>
+        <nav aria-label='Page navigation example'>
+            <ul class='pagination'>
+                <li class='page-item'>
+                    <button type='button' class='page-link' v-if='page != 1' @click='page--'> Previous </button>
+                </li>
+                <li class='page-item'>
+                    <button type='button' class='page-link' v-for='pageNumber in pages.slice(page-1, page+5)' @click='page = pageNumber'> {{pageNumber}} </button>
+                </li>
+                <li class='page-item'>
+                    <button type='button' @click='page++' v-if='page < pages.length' class='page-link'> Next </button>
+                </li> 
+            </ul>
+        </nav>
+    </section>
+</div>
+
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<script src='/ctrl/usuarios.js'></script>
+<%- include ('partials/fin')%>
+

@@ -1,0 +1,46 @@
+<%- include ('partials/head1')%>
+ 
+    <div id="banner-wrapper">
+        <div class="container">
+            <div id="banner">
+                <h2><strong>{{empresa1}}</strong>{{empresa2}}</h2>
+                <span>{{marca}}</span>
+            </div>
+        </div>
+    </div>
+    <div id="main" class="container">
+        <div class="myFormGen">
+  
+            <div class="frmData">
+                <div class='formData' >
+                    <form action="autentica" method="POST">
+                        <br>
+                        <div>
+                            <label class='labeles' for="user">{{lblusuario}}  </label>
+                            <input type="text" name="user" id="user" v-name="user" class='formControl'>
+                        </div>
+                        <br>
+                        <div>
+                            <label class='labeles' for="pswr" class="labeles">{{lblcontrasena}}  </label>                                          
+                            <input type="password" name="pswr" id="pswr" v-name="pswr" class='formControl'>
+                        </div>
+                        <br>
+                        <div>
+                            <button  type="submit">
+                                {{form_btnActualiza}} 
+                            </button>
+                        </div>
+                        <br>
+                        <div>
+                            <span><%= data.error %></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<%- include ('partials/footjs')%>
+<script src="/ctrl/inicial.js"></script>
+<%- include ('partials/fin')%>

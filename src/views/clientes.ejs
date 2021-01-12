@@ -1,0 +1,149 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div id='appclientes' class='container'>
+    <h3 class='text-left'>{{form_title}}</h3>
+    <nav>
+        <button @click='nuevo()' class='btn btn-primary  btn-xs'>{{form_btnNuevo}}</button>
+    </nav>
+    <div id='formulario' class='myFormGen' v-if='formulario'> 
+        <div class='frmData'>
+        <button class='derecha' @click='formulario=false'> X </button>
+        <br>
+                <!-- <div>
+                 <label for='id' class='labeles'>{{lblid}}</label> 
+                <input v-model='id'  type='text' class='formControl' name ='id'> 
+                </div>
+                <div>
+                 <label for='cl_idempresa' class='labeles'>{{lblcl_idempresa}}</label> 
+                <input v-model='cl_idempresa' type='text' class='formControl' name ='cl_idempresa'> 
+                </div> -->
+                <div>
+                 <label for='cl_tipodocumento' class='labeles'>{{lblcl_tipodocumento}}</label> 
+                 <input type='radio' name='cl_tipodocumento' v-model='cl_tipodocumento' value='C'>{{lblcl_tipodocumento0}} 
+                 <input type='radio' name='cl_tipodocumento' v-model='cl_tipodocumento' value='E'>{{lblcl_tipodocumento1}} 
+                 <input type='radio' name='cl_tipodocumento' v-model='cl_tipodocumento' value='N'>{{lblcl_tipodocumento2}} 
+                 <input type='radio' name='cl_tipodocumento' v-model='cl_tipodocumento' value='P'>{{lblcl_tipodocumento3}} 
+                </div>
+                <div>
+                 <label for='cl_documentoid' class='labeles'>{{lblcl_documentoid}}</label> 
+                 <input v-model='cl_documentoid'  type='text' class='formControl' name ='cl_documentoid'> 
+                </div>
+                <div>
+                 <label for='cl_nombre' class='labeles'>{{lblcl_nombre}}</label> 
+                 <input v-model='cl_nombre'  type='text' class='formControl' name ='cl_nombre'> 
+                </div>
+                <div>
+                 <label for='cl_telefono' class='labeles'>{{lblcl_telefono}}</label> 
+                 <input v-model='cl_telefono'  type='text' class='formControl' name ='cl_telefono'> 
+                </div>
+                <div>
+                 <label for='cl_email' class='labeles'>{{lblcl_email}}</label> 
+                 <input v-model='cl_email'  type='text' class='formControl' name ='cl_email'> 
+                </div>
+                <div>
+                 <label for='cl_direccion' class='labeles'>{{lblcl_direccion}}</label> 
+                 <input v-model='cl_direccion'  type='text' class='formControl' name ='cl_direccion'> 
+                </div>
+                <div>
+                 <label for='cl_ciudad' class='labeles'>{{lblcl_ciudad}}</label> 
+                 <input v-model='cl_ciudad'  type='text' class='formControl' name ='cl_ciudad'> 
+                </div>
+                <div>
+                 <label for='cl_zona' class='labeles'>{{lblcl_zona}}</label> 
+                 <input v-model='cl_zona'  type='text' class='formControl' name ='cl_zona'> 
+                </div>
+                <div>
+                 <label for='cl_localidad' class='labeles'>{{lblcl_localidad}}</label> 
+                 <input v-model='cl_localidad'  type='text' class='formControl' name ='cl_localidad'> 
+                </div>
+                <div>
+                 <label for='cl_barrio' class='labeles'>{{lblcl_barrio}}</label> 
+                 <input v-model='cl_barrio'  type='text' class='formControl' name ='cl_barrio'> 
+                </div>
+                <div>
+                 <label for='cl_genero' class='labeles'>{{lblcl_genero}}</label> 
+                 <input type='radio' name='cl_genero' v-model='cl_genero' value='M'>{{lblcl_genero0}} 
+                 <input type='radio' name='cl_genero' v-model='cl_genero' value='F'>{{lblcl_genero1}} 
+                </div>
+                <div>
+                 <label for='cl_estado' class='labeles'>{{lblcl_estado}}</label> 
+                 <input type='radio' name='cl_estado' v-model='cl_estado' value='A'>{{lblcl_estado0}} 
+                 <input type='radio' name='cl_estado' v-model='cl_estado' value='I'>{{lblcl_estado1}} 
+                </div>
+                <br>
+             <button @click='formulario=false' class='izquierda  btn-primary'>{{form_btnAnula}}</button>
+             <button @click='crear()' class='izquierda  btn-primary'>{{form_btnActualiza}}</button>  
+                 <div  style='display: none'>
+                     <input v-model='id' type='text'  name='id' >
+                 </div>
+            </div> 
+            </div>
+    <!-- Tabla donde se muestran los datos paginacion -->
+    <section class='data'>
+        {{form_busqueda}}<input type='text' v-model='searchKey'>
+        <button @click='busca()' class='btn btn-primary  btn-xs'>{{form_btnBuscar}}</button> 
+       <table id='tabla' class='table'>
+           <thead>
+               <tr  class=' btn-primary'>
+              <!-- <th scope='col'>ID</th>
+              <th scope='col'>IDEMPRESA</th> -->
+              <th scope='col'>TIPO DOC</th>
+              <th scope='col'>NUMERO DOC</th>
+              <th scope='col'>NOMBRE</th>
+              <th scope='col'>TELEFONO</th>
+              <th scope='col'>EMAIL</th>
+              <th scope='col'>DIRECCION</th>
+              <th scope='col'>CIUDAD</th>
+              <th scope='col'>ZONA</th>
+              <th scope='col'>LOCALIDAD</th>
+              <th scope='col'>BARRIO</th>
+              <th scope='col'>GENERO</th>
+              <th scope='col'>ESTADO</th>
+            </thead>
+            <tbody v-if='datos.data.length > 0'
+             v-for='(item, index) in datos.data' :key='item.id'> 
+             <tr :id='item.cl_estado'>
+              <!-- <td>{{item.id}}</td>
+              <td>{{item.cl_idempresa}}</td> -->
+              <td>{{item.cl_tipodocumento}}</td>
+              <td>{{item.cl_documentoid}}</td>
+              <td>{{item.cl_nombre}}</td>
+              <td>{{item.cl_telefono}}</td>
+              <td>{{item.cl_email}}</td>
+              <td>{{item.cl_direccion}}</td>
+              <td>{{item.cl_ciudad}}</td>
+              <td>{{item.cl_zona}}</td>
+              <td>{{item.cl_localidad}}</td>
+              <td>{{item.cl_barrio}}</td>
+              <td>{{item.cl_genero}}</td>
+              <td>{{item.cl_estado}}</td>
+                <td><button @click="borrar = true; selectOpcion(item,'B')"
+                    class='btn btn-danger  btn-xs'>{{form_btnDelete}} </button></td>
+                <td><button @click="editar = true; selectOpcion(item,'E')" 
+                    class='btn btn-primary  btn-xs' >{{form_btnEdita}} </button></td>
+            </tr>
+           </tbody>
+        </table>
+        <nav aria-label='Page navigation example'>
+            <ul class='pagination'>
+                <li class='page-item'>
+                    <button type='button' class='page-link' v-if='page != 1' @click='page--'> Previous </button>
+                </li>
+                <li class='page-item'>
+                    <button type='button' class='page-link' v-for='pageNumber in pages.slice(page-1, page+5)' @click='page = pageNumber'> {{pageNumber}} </button>
+                </li>
+                <li class='page-item'>
+                    <button type='button' @click='page++' v-if='page < pages.length' class='page-link'> Next </button>
+                </li> 
+            </ul>
+        </nav>
+    </section>
+</div>
+
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<script src='/ctrl/clientes.js'></script>
+<%- include ('partials/fin')%>
+

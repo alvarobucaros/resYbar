@@ -1,0 +1,137 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div id='appempresas' class='container'>
+    <h3 class='text-left'>{{form_title}}</h3>
+    <section class='myFormGen'>
+        <form  id='idForm' >       
+
+                <br>
+                <div class='myDiv' style='display: none'>
+                    <div>
+                    <label for='id' class='labeles'>{{lblid}}</label> 
+                    <input v-model='id'  type='text' class='4u 12u(mobile)' name ='id'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='em_nombre' class='labeles'>{{lblem_nombre}}</label> 
+                    <input v-model='em_nombre'  type='text' class='4u 12u(mobile)' name ='em_nombre'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='em_direccion' class='labeles'>{{lblem_direccion}}</label> 
+                    <input v-model='em_direccion'  type='text' class='4u 12u(mobile)' name ='em_direccion'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>               
+                    <label for='em_zona' class='labeles'>{{lblem_zona}}</label> 
+                    <input v-model='em_zona'  type='text' class='4u 12u(mobile)' name ='em_zona'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='em_localidad' class='labeles'>{{lblem_localidad}}</label> 
+                    <input v-model='em_localidad'  type='text' class='4u 12u(mobile)' name ='em_localidad'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='em_barrio' class='labeles'>{{lblem_barrio}}</label> 
+                    <input v-model='em_barrio'  type='text' class='4u 12u(mobile)' name ='em_barrio'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                        <label for='em_ciudad' class='labeles'>{{lblem_ciudad}}</label> 
+                        <input v-model='em_ciudad'  type='text' class='4u 12u(mobile)' name ='em_ciudad'> 
+                    </div>  
+                    </div>              
+                <div class='myDiv'>
+                    <div>
+                    <label for='em_nit' class='labeles'>{{lblem_nit}}</label> 
+                    <input v-model='em_nit'  type='text' class='4u 12u(mobile)' name ='em_nit'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='em_telefono' class='labeles'>{{lblem_telefono}}</label> 
+                    <input v-model='em_telefono'  type='text' class='4u 12u(mobile)' name ='em_telefono'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='em_email' class='labeles'>{{lblem_email}}</label> 
+                    <input v-model='em_email'  type='text' class='4u 12u(mobile)' name ='em_email'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='em_usuario' class='labeles'>{{lblem_usuario}}</label> 
+                    <input v-model='em_usuario'  type='text' class='4u 12u(mobile)' name ='em_usuario'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='em_sloganppal' class='labeles'>{{lblem_sloganppal}}</label> 
+                    <input v-model='em_sloganppal'  type='text' class='4u 12u(mobile)' name ='em_sloganppal'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                        <label for='em_slogansec' class='labeles'>{{lblem_slogansec}}</label> 
+                        <input v-model='em_slogansec'  type='text' class='4u 12u(mobile)' name ='em_slogansec'> 
+                        </div>
+                    </div>
+                <div class='myDiv'>
+                    <div>                       
+                        <div class='4u 12u(mobile)'>                    
+                        <label for='em_negocio' >{{lblem_negocio}}</label> 
+                        <span  class='milabel'></span>
+                        <input type='radio' class='miradio' name='em_negocio' v-model='em_negocio' value='B'>{{lblem_negocio0}} 
+                        <input type='radio' class='miradio' name='em_negocio' v-model='em_negocio' value='R'>{{lblem_negocio1}} 
+                        <input type='radio' class='miradio' name='em_negocio' v-model='em_negocio' value='C'>{{lblem_negocio2}} 
+                        </div>
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                    <label for='em_observaciones' class='labeles'>{{lblem_observaciones}}</label> 
+                    <input v-model='em_observaciones'  type='text' class='4u 12u(mobile)' name ='em_observaciones'> 
+                    </div>
+                </div>
+                <div class='myDiv'>
+                    <div>
+                        <div class='4u 12u(mobile)'>
+                        <label for='em_autentica' class='' >{{lblem_autentica}}</label> 
+                        <span  class='milabel'></span>
+                        <input type='radio' class='miradio' name='em_autentica' v-model='em_autentica' value='M'>{{lblem_autentica0}} 
+                        <input type='radio' class='miradio' name='em_autentica' v-model='em_autentica' value='C'>{{lblem_autentica1}} 
+                        <input type='radio' class='miradio' name='em_autentica' v-model='em_autentica' value='D'>{{lblem_autentica2}} 
+                        </div>
+                    </div>
+                </div>
+                <br>
+             
+             <button @click='crear()' class='izquierda btn-primary'>{{form_btnActualiza}}</button>  
+                 <div  style='display: none'>
+                     <input v-model='id' type='text'  name='id' >
+                 </div>
+          
+         </form>
+        </section>
+    <!-- Tabla donde se muestran los datos paginacion -->
+    <section class='data'>
+
+  
+    </section>
+</div>
+
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<script src='/ctrl/empresas.js'></script>
+<%- include ('partials/fin')%>
+

@@ -1,0 +1,144 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div id='appproductos' class='container'>
+    <h3 class='text-left'>{{form_title}}</h3>
+    <nav>
+        <button @click='nuevo()' class='btn btn-primary  btn-xs'>{{form_btnNuevo}}</button>
+    </nav>
+
+    <div id='formulario' class='myFormGen' v-if='formulario'> 
+        <form  id='idForm' enctype="multipart/form-data" >         
+        <div  class="frmData">
+            <button class='derecha' @click='formulario=false'> X </button>
+            <br>
+            <!-- 
+                <div>
+                 <label for='id' class='labeles'>{{lblid}}</label> 
+                <input v-model='id'  type='text' class='formControl' name ='id'> 
+                </div>
+                <div>
+                 <label for='im_tipoProductoId' class='labeles'>{{lblim_tipoProductoId}}</label> 
+                <input v-model='im_tipoProductoId'  type='text' class='formControl' name ='id'> 
+                </div>                
+                <div>
+                 <label for='im_idEmpresa' class='labeles'>{{lblim_idEmpresa}}</label> 
+                <input v-model='im_idEmpresa'  type='text' class='formControl' name ='im_idEmpresa'> 
+                </div> -->  
+                <div class="input-field col s12">
+                    <label for="seleccionado"  class='labeles'>{{lblpr_idtipo}}</label>
+                    <select v-model="seleccionado" id="seleccionado"  @change="cambiaTipo()">
+                    <option v-for="elemento in tipoproductos.data" v-bind:value="elemento.tp_codigo">{{ elemento.tp_descipcion }}</option>
+                    </select>             
+                </div>
+                <div class="input-field col s12">
+                    <label for="seleccionapr"  class='labeles'>{{lblim_idproducto}}</label>
+                    <select v-model="seleccionapr" id="seleccionapr"  @change="cambiaProd()"  >
+                    <option v-for="elemento in productos.data" v-bind:value="elemento.id">{{ elemento.pr_descipcion }}</option>
+                    </select>             
+                </div>                
+                <div class="input-field col s12">
+                 <label for = 'im_titulo' class='labeles'>{{lblim_titulo}}</label>                 
+                 <input v-model='im_titulo'  type='text' class='formControl' id ='im_titulo'> 
+                </div>
+                <!-- id,im_idEmpresa,im_tipoProductoId,im_productoId,im_tipo,im_imagen,im_titulo,im_descripcion, im_estado               -->
+                 <div class="input-field ">
+                 <label for='im_descripcion' class='labeles'>{{lblim_descripcion}}</label> 
+                <input v-model='im_descripcion'  type='text' class='formControl' id ='im_descripcion'> 
+                </div>
+                <div>
+                 <label for='im_imagen' class='labeles'>{{lblim_imagen}}</label> 
+                 <input v-model='im_imagen'  type='text' class='formControl' id ='im_imagen'>
+                 <div>
+                    <img v-bind:src="getImgUrlOne()" width="150" title="foto"/>            
+                </div> 
+                <div>
+                    <input type="file" name="logoimagen" id="logoimagen" 
+                    @change='handleAttachment($event)'>
+                    <button class='btn btn-primary  btn-xs'>{{form_btnSubir}}</button>
+                </div>           
+
+                <div>
+                    <label for='im_tipo' class='labeles'>{{lblim_tipo}}</label> 
+                    <input type='radio' name='im_tipo' v-model='im_tipo' value='P'>{{lblim_tipo0}} 
+                    <input type='radio' name='im_tipo' v-model='im_tipo' value='G'>{{lblim_tipo1}} 
+                   </div>
+
+                <div>
+                 <label for='im_estado' class='labeles'>{{lblim_estado}}</label> 
+                 <input type='radio' name='im_estado' v-model='im_estado' value='A'>{{lblim_estado0}} 
+                 <input type='radio' name='im_estado' v-model='im_estado' value='I'>{{lblim_estado1}} 
+                </div>
+                <div>
+                <button @click='formulario=false' class='izquierda  btn-primary'>{{form_btnAnula}}</button>
+                <button @click='crear()' class='izquierda btn-primary'>{{form_btnActualiza}}</button>  
+                </div>
+                <div  style='display: none'>
+                    <input v-model='id' type='text'  name='id' >
+                </div>
+                <br>
+        </div> 
+        </form>
+    </div> 
+ 
+    <!-- Tabla donde se muestran los datos paginacion -->
+    <section class='data'  v-if='detalles'>
+        {{form_busqueda}}<input type='text' v-model='searchKey'>
+        <button @click='busca()' class='btn btn-primary  btn-xs'>{{form_btnBuscar}}</button> 
+       <table id='tabla' class='table'>
+           <thead>
+               <tr  class=' btn-primary'>
+              <!-- <th scope='col'>ID</th>
+              <th scope='col'>IDEMPRESA</th> 
+              <th scope='col'>TIPOPROUCTO</th>
+              <th scope='col'>PRODUCTO</th>-->
+              <th scope='col'>IMAGEN</th>
+              <th scope='col'>TITULO</th>
+              <th scope='col'>DESCRIPCION</th>
+              <th scope='col'>TIPO</th>
+              <th scope='col'>ESTADO</th>
+            </thead>
+            <tbody v-if='datos.data.length > 0'
+             v-for='(item, index) in datos.data' :key='item.id'> 
+             <tr :id='item.im_estado'>
+               <!-- <td>{{item.id}}</td> 
+              <td>{{item.im_idEmpresa}}
+              <td>{{item.im_tipoProductoId}}</td> 
+              <td>{{item.im_productoId}}</td> -->
+              <td><img v-bind:src="getImgUrl(index)" v-bind:alt="pic" width="70" height="60"></td>
+              <td>{{item.im_titulo}}</td>              
+              <td>{{item.im_descripcion}}</td>
+              <td>{{item.im_tipo}}</td>
+              <td>{{item.im_estado}}</td>
+              <!-- <td>{{item.pr_idTipo}}</td> -->
+			 <td><button @click="borrar = true; selectOpcion(item,'B')"
+				 class='btn btn-danger  btn-xs'>{{form_btnDelete}} </button></td>
+			 <td><button @click="editar = true; selectOpcion(item,'E')" 
+				 class='btn btn-primary  btn-xs' >{{form_btnEdita}} </button></td>
+		  </tr>
+           </tbody>
+        </table>
+        <nav aria-label='Page navigation example'>
+            <ul class='pagination'>
+                <li class='page-item'>
+                    <button type='button' class='page-link' v-if='page != 1' @click='page--'> Previous </button>
+                </li>
+                <li class='page-item'>
+                    <button type='button' class='page-link' v-for='pageNumber in pages.slice(page-1, page+5)' @click='page = pageNumber'> {{pageNumber}} </button>
+                </li>
+                <li class='page-item'>
+                    <button type='button' @click='page++' v-if='page < pages.length' class='page-link'> Next </button>
+                </li> 
+            </ul>
+        </nav>
+    </section>
+</div>
+
+<!-- https://unprogramador.com/subir-imagen-con-nodejs/ -->
+
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<script src='/ctrl/imagenes.js'></script>
+<%- include ('partials/fin')%>
+

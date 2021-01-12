@@ -1,0 +1,91 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div id='apptipoproductos' class='container'>
+    <h3 class='text-left'>{{form_title}}</h3>
+    <nav>
+        <button @click='nuevo()' class='btn btn-primary  btn-xs'>{{form_btnNuevo}}</button>
+    </nav>
+    <div id='formulario' class='myFormGen' v-if='formulario'> 
+        <div class='frmData'>
+        <button class='derecha' @click='formulario=false'> X </button>
+        <br>
+                <!-- <div>
+                 <label for='id' class='labeles'>{{lblid}}</label> 
+                <input v-model='id'  type='text' class='formControl' name ='id'> 
+                </div>
+                <div>
+                 <label for='tp_idempresa' class='labeles'>{{lbltp_idempresa}}</label> 
+                <input v-model='tp_idempresa'  type='text' class='formControl' name ='tp_idempresa'> 
+                </div> -->
+                <div>
+                 <label for='tp_codigo' class='labeles'>{{lbltp_codigo}}</label> 
+                 <input v-model='tp_codigo'  type='text' class='formControl' name ='tp_codigo'> 
+                </div>
+                <div>
+                 <label for='tp_descipcion' class='labeles'>{{lbltp_descipcion}}</label> 
+                 <input v-model='tp_descipcion'  type='text' class='formControl' name ='tp_descipcion'> 
+                </div>
+                <div>
+                 <label for='tp_estado' class='labeles'>{{lbltp_estado}}</label> 
+                 <input type='radio' name='tp_estado' v-model='tp_estado' value='A'>{{lbltp_estado0}} 
+                 <input type='radio' name='tp_estado' v-model='tp_estado' value='I'>{{lbltp_estado1}} 
+                </div>
+                <br>
+             <button @click='formulario=false' class='izquierda btn-primary'>{{form_btnAnula}}</button>
+             <button @click='crear()' class='izquierda btn-primary'>{{form_btnActualiza}}</button>  
+                 <div  style='display: none'>
+                     <input v-model='id' type='text'  name='id' >
+                 </div>
+            </div> 
+         </div> 
+    <!-- Tabla donde se muestran los datos paginacion -->
+    <section class='data'>
+        {{form_busqueda}}<input type='text' v-model='searchKey'>
+        <button @click='busca()' class='btn btn-primary  btn-xs'>{{form_btnBuscar}}</button> 
+       <table id='tabla' class='table'>
+           <thead>
+               <tr  class=' btn-primary'>
+              <!-- <th scope='col'>ID</th>
+              <th scope='col'>IDEMPRESA</th> -->
+              <th scope='col'>CODIGO</th>
+              <th scope='col'>DESCIPCION</th>
+              <th scope='col'>ESTADO</th>
+            </thead>
+            <tbody v-if='datos.data.length > 0'
+             v-for='(item, index) in datos.data' :key='item.id'> 
+             <tr :id='item.tp_estado'>
+              <!-- <td>{{item.id}}</td>
+              <td>{{item.tp_idempresa}}</td> -->
+              <td>{{item.tp_codigo}}</td>
+              <td>{{item.tp_descipcion}}</td>
+              <td>{{item.tp_estado}}</td>
+                                     <td><button @click="borrar = true; selectOpcion(item,'B')"
+                                         class='btn btn-danger  btn-xs'>{{form_btnDelete}} </button></td>
+                                     <td><button @click="editar = true; selectOpcion(item,'E')" 
+                                         class='btn btn-primary  btn-xs' >{{form_btnEdita}} </button></td>
+                          </tr>
+           </tbody>
+        </table>
+        <nav aria-label='Page navigation example'>
+            <ul class='pagination'>
+                <li class='page-item'>
+                    <button type='button' class='page-link' v-if='page != 1' @click='page--'> Previous </button>
+                </li>
+                <li class='page-item'>
+                    <button type='button' class='page-link' v-for='pageNumber in pages.slice(page-1, page+5)' @click='page = pageNumber'> {{pageNumber}} </button>
+                </li>
+                <li class='page-item'>
+                    <button type='button' @click='page++' v-if='page < pages.length' class='page-link'> Next </button>
+                </li> 
+            </ul>
+        </nav>
+    </section>
+</div>
+
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<script src='/ctrl/tipoproductos.js'></script>
+<%- include ('partials/fin')%>
+

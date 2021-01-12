@@ -1,0 +1,35 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div id="banner-wrapper">
+    <div class="container">
+        <div id="banner">
+            <h2><strong>{{empresa1}}</strong>{{empresa2}}</h2>
+            <span>{{tit01}}<%= data[0].em_negocio %></span>
+            <br>
+            <h3><%= data[0].em_nombre %></h3>
+            <h3>{{tit02}}: <%= data[0].us_nombre %></h3>
+        </div>
+    </div>
+
+    <div id="main" style='display: none'>
+        <div class="container" >
+            <div class="row main-row">
+                <div class="4u 12u(mobile)">
+                <input type="text" v-name="idlog" value="<%= data[0].id %>">
+                </div>
+                <div class="4u 12u(mobile)">
+                    <input type="text" v-name="emlog" value="<%= data[0].us_idEmpresa %>">
+                </div>
+                <div class="4u 12u(mobile)">
+                    <input type="text" v-name="nglog" value="<%= data[0].em_negocio %>">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<%- include ('partials/footjs')%>
+<script src='/ctrl/autentica.js'></script>

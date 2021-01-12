@@ -1,0 +1,19 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+    <div class="imagen">
+        <div>
+            <img src="img/Trabajando.jpg" alt="Working" class="center">
+        </div> 
+        <div class="item">
+            <button class='btn btn-primary btn-xs' id="btnIngreso" onclick="regreso()">Al Menú</button> 
+        </div>  
+    </div>
+    <%- include ('partials/foot1')%>
+    <script type="text/javascript">
+      
+        function regreso(){
+            window.history.back();
+        }
+    </script>
+    <%- include ('partials/footjs')%>

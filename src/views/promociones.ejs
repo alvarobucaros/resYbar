@@ -1,0 +1,131 @@
+<%- include ('partials/head1')%>
+
+<%- include ('partials/menu')%>
+
+<div id='appproductos' class='container'>
+    <h3 class='text-left'>{{form_title}}</h3>
+
+    <div id='formulario' class='myFormGen' v-if='formulario'> 
+        <form  id='idForm' >         
+        <div  class="frmData">
+            <br> 
+                <div class="input-field col s12">
+                    <label for="seleccionado"  class='labeles'>{{lblpr_tipo}}</label>
+                    <select v-model="seleccionado" id="seleccionado"  @change="cambiaTipo()">
+                    <option v-for="elemento in tipoproductos.data" v-bind:value="elemento.tp_codigo">{{ elemento.tp_descipcion }}</option>
+                    </select>             
+                </div>
+                <div  style='display: none'>
+                    <input v-model='id' type='text'  name='id' >
+                </div>
+            <br>
+        </div>
+        </form>
+    </div> 
+ 
+    <div id='formato' class='myFormGen' v-if='formato'> 
+        <form> 
+            <button class='derecha' @click='formato=false'> X </button>        
+            <div  class="frmData">
+                <div class="input-field ">
+                    <label for='pr_descipcion' class='labeles'>{{lblpr_descipcion}}</label> 
+                   <input v-model='pr_descipcion'  type='text' class='formControl' id ='pr_descipcion'> 
+                </div>         
+                <div>
+                    <label for='pr_precio' class='labeles'>{{lblpr_precio}}</label> 
+                   <input v-model='pr_precio'  type='text' class='formControl' id ='pr_precio'> 
+                </div>
+                <div>
+                    <label for='pr_descPesos' class='labeles'>{{lblpr_descPesos}}</label> 
+                   <input v-model='pr_descPesos'  type='text' class='formControl' id ='pr_descPesos'> 
+                </div>                
+                <div>
+                    <label for='pr_descPorcentaje' class='labeles'>{{lblpr_descPorcentaje}}</label> 
+                   <input v-model='pr_descPorcentaje'  type='text' class='formControl' id ='pr_descPorcentaje'> 
+                </div>                
+                <div>
+                    <label for='pr_iva' class='labeles'>{{lblpr_iva}}</label> 
+                   <input v-model='pr_iva'  type='text' class='formControl' id ='pr_iva'> 
+                </div>  
+                <div>
+                    <label for='pr_diasVenta' class='labeles'>{{lblpr_diasVenta}}</label> 
+                    <input v-model='pr_diasVenta'  type='text' class='formControl' id ='pr_diasVenta'> 
+                </div>
+                <div>
+                    <label for='pr_inventario' class='labeles'>{{lblpr_inventario}}</label> 
+                   <input v-model='pr_inventario'  type='text' class='formControl' id ='pr_inventario'> 
+                </div>                
+                <div>
+                    <label for='pr_existencias' class='labeles'>{{lblpr_existencias}}</label> 
+                   <input v-model='pr_existencias'  type='text' class='formControl' id ='pr_existencias'> 
+                </div> 
+                <div>
+                    <label for='pr_ofertaDesde' class='labeles'>{{lblpr_ofertaDesde}}</label> 
+                   <input v-model='pr_ofertaDesde'  type='date' class='formControl' id ='pr_ofertaDesde'> 
+                </div> 
+                <div>
+                    <label for='pr_ofertaHasta' class='labeles'>{{lblpr_ofertaHasta}}</label> 
+                   <input v-model='pr_ofertaHasta'  type='date' class='formControl' id ='pr_ofertaHasta'> 
+                </div>                                 
+                <div>
+                    <button @click='formulario=false' class='izquierda  btn-primary'>{{form_btnAnula}}</button>
+                    <button @click='guardar()' class='izquierda btn-primary'>{{form_btnActualiza}}</button>  
+                </div> 
+            </div>                                     
+            <br>
+        </form>
+    </div>
+    <!-- Tabla donde se muestran los datos paginacion  -->
+    <section class='data'  >
+         <table id='tabla' class='table'>
+           <thead>
+            <tr  class=' btn-primary'>
+              <!-- <th>ID</th> -->
+              <th>DESCRIPCION</th>             
+              <th>PRECIO</th>
+              <th>DESC $</th>
+              <th>DESC %</th>
+              <th>IVA</th>
+              <th>DIAS VENTA</th> 
+              <th>EXISTECIAS</th> 
+              <th>FCH DESDE</th>
+              <th>FCH HASTA</th>
+            </thead>
+            <tbody v-if='datos.data.length > 0'
+             v-for='(item, index) in datos.data' :key='item.id'> 
+             <tr :id='item.id'>
+               <!-- <td>{{item.id}}</td> -->
+              <td>{{item.pr_descipcion}}
+              <td>{{formatValue(item.pr_precio)}}</td> 
+              <td>{{formatValue(item.pr_descPesos)}}</td> 
+              <td>{{formatValue(item.pr_descPorcentaje)}}</td>              
+              <td>{{formatValue(item.pr_iva)}}</td>
+              <td>{{item.pr_diasVenta}}</td>
+              <td>{{item.pr_existencias}}</td>
+              <td>{{item.pr_ofertaDesde.substring(0,10)}}</td> 
+              <td>{{item.pr_ofertaHasta.substring(0,10)}}</td> 
+              <td><button @click="editar = true; selectOpcion(item)" 
+                class='btn btn-primary  btn-xs' >{{form_btnEdita}} </button></td>
+		    </tr>
+           </tbody>
+        </table>
+        <nav aria-label='Page navigation example'>
+            <ul class='pagination'>
+                <li class='page-item'>
+                    <button type='button' class='page-link' v-if='page != 1' @click='page--'> Previous </button>
+                </li>
+                <li class='page-item'>
+                    <button type='button' class='page-link' v-for='pageNumber in pages.slice(page-1, page+5)' @click='page = pageNumber'> {{pageNumber}} </button>
+                </li>
+                <li class='page-item'>
+                    <button type='button' @click='page++' v-if='page < pages.length' class='page-link'> Next </button>
+                </li> 
+            </ul>
+        </nav>
+    </section>
+</div>
+<%- include ('partials/foot1')%>
+<%- include ('partials/footjs')%>
+<script src='/ctrl/promociones.js'></script>
+<%- include ('partials/fin')%>
+
