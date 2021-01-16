@@ -19,22 +19,22 @@ controller.list = (req, res) => {
   
 controller.listOne = (req, res) => {   
    req.getConnection((err, conn) => {
-      var { cod } = req.params; 
-      cod = cod.replace(':','');
-console.log(cod);
-      rec=cod.split('||'); 
+      var { id } = req.params; 
+      codi = id.replace(':','');
+      rec=codi.split('||'); 
       var sql= 'SELECT id, cl_idempresa, cl_tipodocumento, cl_documentoid, ';
       sql +=' cl_nombre, cl_telefono, cl_email, cl_direccion, cl_ciudad, cl_zona, ';
       sql +=' cl_localidad, cl_barrio, cl_genero, cl_estado';
       sql +=' FROM clientes WHERE cl_idempresa = 1 AND' ;
       sql +=" cl_tipodocumento = '" + rec[0] + "' AND ";
       sql +=" cl_documentoid  = '" + rec[1] + "' ";
+     
       conn.query(sql, [id], (err, respuesta)=> { 
           if (respuesta.length>0){ 
-            res.render('clientes', { data: respuesta}); 
+            res.json({ data: respuesta}); 
           } 
         else { 
-            res.json(err); 
+            res.json({ data: 0}); 
           } 
         }); 
       }); 

@@ -77,8 +77,7 @@ controller.listPortal = (req, res) =>{
   req.getConnection((err, conn) => {
     const { llave } = req.params;
     keys = llave.replace(':', '');
-    rec = keys.split('||');
- 
+    rec = keys.split('||'); 
       var sql= "SELECT id, pr_idEmpresa, pr_idTipo, pr_codigo, pr_descipcion, pr_foto,  ";
       sql +=" pr_titulo, pr_diasVenta, pr_precio, pr_inventario, pr_existencias,  ";
       sql +=" pr_descPesos, pr_descPorcentaje, pr_iva, pr_marca, pr_referencia, pr_estado, ";
@@ -94,17 +93,15 @@ controller.listPortal = (req, res) =>{
         sql +=" AND pr_ofertaDesde <= '"+ rec[2] +"' AND  pr_ofertaHasta  >= '"+ rec[2] +"'";
       }
       sql +=" ORDER BY  pr_precio ";
-
-// console.log(sql);
-            conn.query(sql, (err, respuesta)=> { 
-              if (respuesta.length>0){ 
-              res.json({ data: respuesta}) 
-           } 
-            else { 
-              var error = {error: 'No hay productos'}; 
-            } 
-           }); 
-         }); 
+      conn.query(sql, (err, respuesta)=> { 
+        if (respuesta.length>0){ 
+        res.json({ data: respuesta}) 
+      } 
+      else { 
+        var error = {error: 'No hay productos'}; 
+      } 
+      }); 
+    }); 
 };
 
  controller.save = (req, res) => {

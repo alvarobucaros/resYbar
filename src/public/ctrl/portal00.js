@@ -1,6 +1,5 @@
-
 var data =  {   
-    titulo: 'Esto es un ejemplo',
+    titulo: 'Ventas por Internet',
     form_btnInicio:'Inicio', 
     form_btnActualiza:'',
     form_btnContinua:'Continua',
@@ -8,6 +7,7 @@ var data =  {
     form_btnContactos:'Contáctenos',
     form_btnDelete:'Elimina',
     form_btnHacePedido:'Hacer pedido',
+    form_btnGrabaCliente:'Registra cliente',
     lblcl_tipodocumento:'tipo documento',
     lblcl_tipodocumento0:'C.Ciudadanía',
     lblcl_tipodocumento1:'C.Extrangería',
@@ -19,6 +19,9 @@ var data =  {
     lblcl_email:'email',
     lblcl_direccion:'dirección',
     lblcl_ciudad:'ciudad',
+    lblcl_genero:'Género',
+    lblcl_genero0:'Masculino',
+    lblcl_genero1:'Femenino',
     imgCarrito:'/logos/car1.jpg',
     tipos:'',
     empresa:'1',
@@ -32,6 +35,9 @@ var data =  {
     productos:true,
     imagenes:false,
     detalles:false,
+    seenPedido:false,
+    seenCliente:false,
+    seenDetalleCli:false,
     btn_send:'Enviar',
     lblct_celular:'Teléfono:',
     lblct_name:'Nombre:',
@@ -39,8 +45,26 @@ var data =  {
     lblct_message:'Mensage',
     form_title: 'Contáctenos',
     form_misCompras:'Mis Compras',
+    lblcl_nombre:'Nombre',
+    lblcl_telefono:'Teléfono',
+    lblcl_direccion:'Dirección',
+    lblcl_ciudad:'Ciudad',
+    lblcl_barrio:'Barrio',
+    lblcl_email:'E-mail',
+    cl_idempresa:'1',
     cl_tipodocumento:'',
     cl_documentoid:'',
+    cl_telefono:'',
+    cl_nombre:'',
+    cl_direccion:'',
+    cl_ciudad:'',
+    cl_barrio:'',
+    cl_email:'',
+    cl_genero:'F',
+    cl_zona:'',
+    cl_localidad:'', 
+    cl_estado:'', 
+   
     carAdd:'Comprar',
     carNro:'Cantidad',
     pr_tipoproductoId:'',
@@ -70,17 +94,13 @@ var data =  {
         message: '',
         celular:'',
     },
-    miCar:{'id':0,'pr_titulo':'','pr_marca':'','pr_referencia':'','pr_descipcion':'',
-    'pr_precio':0,'descuento':0,'pr_iva':0,'vlrIva':0,'neto':0,'carcantidad':0,
-    'pr_foto':''},
     arrCar:[],
-    arrCli:{},
+    arrCli:[],
     seen: true,
     isSending: false
 };
 
-const vm = new Vue({
-  
+const vm = new Vue({  
     el: '#app',
     data: data,
     mounted () {  
@@ -179,7 +199,7 @@ const vm = new Vue({
             this.subDescuento=0;
             this.subIva=0;
             this.subNeto=0;
-            
+            this.id=0;
             for (i=0;i<this.arrCar.length;i++){
                 canti = this.arrCar[i].carcantidad;
                 this.subPrecio += this.arrCar[i].pr_precio * canti;
@@ -203,25 +223,117 @@ const vm = new Vue({
         },
         hacePedido: function(){
             this.seen=true;
-            alert('Hacer pedido');
             var a='';
             for (i=0;i<this.arrCar.length;i++){
               a +=this.arrCar[i].pr_descipcion+'|';
             }
+            if(a===''){
+                alert('No ha seleccionado ningún artículo');
+                return;
+            }
             alert(a);
         },
+        
+        grabaCliente: function(){
+            er='';
+            if(this.cl_telefono===''){er+='Falta telefono \n'}
+            if(this.cl_nombre===''){er+='Falta Nombre \n'}
+            if(this.cl_direccion===''){er+='Falta Dirección \n'}
+            if(this.cl_ciudad===''){er+='Falta Ciudad \n'}
+            if(this.cl_barrio===''){er+='Falta Barrio \n'}
+            if(this.cl_email===''){er+='Falta E-mail \n'}
+            if(er==''){
+                this.seenPedido=true;
+                if(this.id===0){
+                    axios.post('/cliadd', { 
+                    id:this.id,
+                    cl_idempresa:this.cl_idempresa,
+                    cl_tipodocumento:this.cl_tipodocumento,
+                    cl_documentoid:this.cl_documentoid,
+                    cl_nombre:this.cl_nombre,
+                    cl_telefono:this.cl_telefono,
+                    cl_email:this.cl_email,
+                    cl_direccion:this.cl_direccion,
+                    cl_ciudad:this.cl_ciudad,
+                    cl_zona:this.cl_zona,
+                    cl_localidad:this.cl_localidad,
+                    cl_barrio:this.cl_barrio,
+                    cl_genero:this.cl_genero,
+                    cl_estado:'A',                    
+                      }).then(response => {
+                            this.leeRegistros();
+                            this.formulario=false;
+                      }).catch(e => {
+                          console.log(e);
+                      });
+              }else{
+                  axios.put('cliadd/'+this.id, {
+                    id:this.id,
+                    cl_idempresa:this.cl_idempresa,
+                    cl_tipodocumento:this.cl_tipodocumento,
+                    cl_documentoid:this.cl_documentoid,
+                    cl_nombre:this.cl_nombre,
+                    cl_telefono:this.cl_telefono,
+                    cl_email:this.cl_email,
+                    cl_direccion:this.cl_direccion,
+                    cl_ciudad:this.cl_ciudad,
+                    cl_zona:this.cl_zona,
+                    cl_localidad:this.cl_localidad,
+                    cl_barrio:this.cl_barrio,
+                    cl_genero:this.cl_genero,
+                    cl_estado:this.cl_estado,
+                  }).then(response => {
+                        this.leeRegistros();
+                        this.formulario=false;
+                  }).catch(e => {
+                      console.log(e);
+                  });
+              };
+            }
+            else{
+                alert(er);
+            }
+        },
         valiCliente:  function(){
-            var cod='';
-            cod += this.cl_tipodocumento +'||' +  this.cl_documentoid;
-            alert('vali ciente '+cod);
-            //'/clientes/:id'
-            axios.get('/clientes/:cod', { 
-            }).then(response => {
-                this.arrCli=response.data;
-                alert(this.arrCli[5]);                    
-            }).catch(e => {
-                console.log(e);
-            })
+            var er='';
+            if(this.cl_tipodocumento === ''){
+                er +='Falta tipo de documento \n';
+            }
+            if(this.cl_documentoid === ''){
+                er +='Falta numero de documento \n';
+            }
+            if (er===''){
+                var id = this.cl_tipodocumento +'||' +  this.cl_documentoid;
+     
+        const sendGetRequest = async() => {
+         try{
+        const response = await  axios.get('/clientes/:'+id);
+            this.seenCliente=true;
+            this.seenPedido=true;
+            this.form_btnGrabaCliente='Registra cliente';
+            this.arrCli=response.data;     
+            this.id = this.arrCli.data[0].id;     
+            this.cl_telefono=this.arrCli.data[0].cl_telefono;
+            this.cl_nombre=this.arrCli.data[0].cl_nombre;
+            this.cl_direccion=this.arrCli.data[0].cl_direccion;
+            this.cl_ciudad=this.arrCli.data[0].cl_ciudad;
+            this.cl_barrio=this.arrCli.data[0].cl_barrio;
+            this.cl_email=this.arrCli.data[0].cl_email;                    
+            this.cl_genero=this.arrCli.data[0].cl_genero
+            this.cl_zona=this.arrCli.data[0].cl_zona
+            this.cl_localidad=this.arrCli.data[0].cl_localidad
+            this.cl_estado=this.arrCli.data[0].cl_estado  
+            if(this.cl_nombre !==''){
+                this.form_btnGrabaCliente='Actualiza cliente';
+            }        
+         }catch(err){
+             console.error(err)
+         }
+     };
+     this.seenDetalleCli=true;
+     sendGetRequest();
+ //           grabaCliente 
+            }           
         },
         miEmpresa: function(){
             this.empresas=true;

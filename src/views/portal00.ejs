@@ -153,7 +153,7 @@
 
 <div id='carcito' class="contenedor btn1" v-if='carcito'>
     <div class="modal">
-        <form class="form"> 
+        <div class="form"> 
             <button class='derecha' @click='carcito=false'>X</button>
             <table id='tabla' class="tabla">
                 <tr>
@@ -174,7 +174,7 @@
                 </tr> 
             </table>
             <label for="">Total compra : $</label><span>{{formatValue(subNeto)}}</span>
-            <button class='izquierda btn btn-primary  btn-xs' @click='hacePedido()'>{{form_btnHacePedido}}</button>
+         <br>
            <div class="clnte" id="clnte" v-if='seen' >
                 <div>
                 <label for='cl_tipodocumento' class='labeles'>{{lblcl_tipodocumento}}</label> 
@@ -183,14 +183,54 @@
                 <input type='radio' name='cl_tipodocumento' v-model='cl_tipodocumento' value='N'>{{lblcl_tipodocumento2}} 
                 <input type='radio' name='cl_tipodocumento' v-model='cl_tipodocumento' value='P'>{{lblcl_tipodocumento3}} 
                </div>
+               
                <div>
                 <label for='cl_documentoid' class='labeles'>{{lblcl_documentoid}}</label> 
                 <input v-model='cl_documentoid'  type='text' class='formControl' name ='cl_documentoid'> 
                </div>
-               <button class='btn btn-primary  btn-xs' @click='valiCliente()'>{{form_btnContinua}}</button>
-           </div>
-        </form>
-       
+               <div>
+                    <button class='btn btn-primary  btn-xs' @click='valiCliente()'>{{form_btnContinua}}</button>
+               </div>
+               <div v-if='seenDetalleCli'>
+                    <div>
+                    <label for='cl_nombre' class='labeles'>{{lblcl_nombre}}</label> 
+                    <input v-model='cl_nombre'  type='text' class='formControl' name ='cl_nombre'> 
+                    </div>
+                    <div>
+                        <label for='cl_genero' class='labeles'>{{lblcl_genero}}</label> 
+                        <input type='radio' name='cl_genero' v-model='cl_genero' value='M'>{{lblcl_genero0}} 
+                        <input type='radio' name='cl_genero' v-model='cl_genero' value='F'>{{lblcl_genero1}} 
+                    </div>                    
+                    <div>
+                    <label for='cl_telefono' class='labeles'>{{lblcl_telefono}}</label> 
+                    <input v-model='cl_telefono'  type='text' class='formControl' name ='cl_telefono'> 
+                    </div>  
+
+                    <div>
+                    <label for='cl_direccion' class='labeles'>{{lblcl_direccion}}</label> 
+                    <input v-model='cl_direccion'  type='text' class='formControl' name ='cl_direccion'> 
+                    </div> 
+                    <div>
+                    <label for='cl_ciudad' class='labeles'>{{lblcl_ciudad}}</label> 
+                    <input v-model='cl_ciudad'  type='text' class='formControl' name ='cl_ciudad'> 
+                    </div> 
+                    <div>
+                    <label for='cl_barrio' class='labeles'>{{lblcl_barrio}}</label> 
+                    <input v-model='cl_barrio'  type='text' class='formControl' name ='cl_barrio'> 
+                    </div>                               
+                    <div>
+                    <label for='cl_email' class='labeles'>{{lblcl_email}}</label> 
+                    <input v-model='cl_email'  type='text' class='formControl' name ='cl_email'> 
+                    </div> 
+                </div>               
+            </div>
+            <div>
+                <button class='izquierda btn btn-primary  btn-xs' @click='grabaCliente()' v-if='seenCliente'>{{form_btnGrabaCliente}}</button>
+            </div>                
+            <div>
+                <button class='izquierda btn btn-primary  btn-xs' @click='hacePedido()'  v-if='seenPedido'>{{form_btnHacePedido}}</button>
+            </div>
+        </div>       
     </div>
 </div>
 

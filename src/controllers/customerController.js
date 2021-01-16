@@ -62,6 +62,7 @@ controller.index = (req, res) => {
       });
       };
 
+      // Informacion de la empresa y de parametros
 controller.portal0 = (req,res)=>{ 
   req.getConnection((err, conn) => {
       var sql="SELECT  em_nombre, em_direccion, em_zona, em_localidad, em_barrio, em_nit, "
