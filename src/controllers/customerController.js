@@ -156,4 +156,6 @@ controller.update = (req, res) => {
     console.log('cargara');
   };
 
+  
+
 module.exports = controller;

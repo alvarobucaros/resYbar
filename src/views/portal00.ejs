@@ -173,7 +173,7 @@
                         class='btn btn-danger  btn-xs'>{{form_btnDelete}} </button></td>
                 </tr> 
             </table>
-            <label for="">Total compra : $</label><span>{{formatValue(subNeto)}}</span>
+            <span>Total $ {{formatValue(subPrecio)}} Descuento $ {{formatValue(subDescuento)}} IVA (incluido) $ {{formatValue(subIva)}}   NETO A PAGAR $ {{formatValue(subNeto)}}</span>
          <br>
            <div class="clnte" id="clnte" v-if='seen' >
                 <div>

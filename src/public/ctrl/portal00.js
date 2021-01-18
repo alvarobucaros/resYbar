@@ -64,7 +64,7 @@ var data =  {
     cl_zona:'',
     cl_localidad:'', 
     cl_estado:'', 
-   
+    
     carAdd:'Comprar',
     carNro:'Cantidad',
     pr_tipoproductoId:'',
@@ -142,6 +142,12 @@ const vm = new Vue({
         formatValue(value) {
             let val = (value/1).toFixed(2).replace('.', ',')
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        },
+        nroPedido: function(){
+            nro = parseInt(this.rec.data[0].pm_consecpedido.substring(2, 10)) + 1;
+            var n = String(nro).length;
+            x='PD'+'0000000000'.substring(1,9-n)+String(nro);
+            return x;
         },
         traeProducto: function(tipo){          
             llave=this.empresa+'||'+tipo+'||'+this.fechaHoy()
@@ -231,7 +237,18 @@ const vm = new Vue({
                 alert('No ha seleccionado ningún artículo');
                 return;
             }
-            alert(a);
+            nro = this.nroPedido();
+            fch = this.fechaHoy();
+            cod=nro+'|'+fch+'|'+
+            alert('ejecuta nro de pedido '+nro);
+
+        //     SELECT id, ped_numero, ped_fecha, ped_clienteId, ped_medioPago, ped_estado, ped_nroFactura, ped_fechaFactura, ped_vlrFactura,
+        //     ped_vlrIva, ped_vlrNeto, ped_refPago
+        //     FROM pedidos;
+           
+           
+        //    SELECT id,det_pedidoId,det_productoid,det_cantidad FROM pedidodetalle
+
         },
         
         grabaCliente: function(){
