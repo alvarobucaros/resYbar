@@ -42,7 +42,7 @@ CREATE TABLE `clientes` (
   PRIMARY KEY (`id`),
   KEY `cl_idEmpresa` (`cl_idEmpresa`),
   CONSTRAINT `clientes_ibfk_1` FOREIGN KEY (`cl_idEmpresa`) REFERENCES `empresas` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,7 +51,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (3,1,'C','38','Alvaro','311','aoc@com.co','Cll 54','Bta','Norte','Tesa','Paulo','M','A'),(5,1,'C','45877','Carmen','2524256','carmen@com.co','Cll 88','Bta','Norte','Suba','Chia','F','A'),(6,1,'C','12445','Juliana','3465','a1@com','cr 45','cali','norte','chia','chia','M','A'),(7,1,'C','123','Luis','3174142133','alvaro.oycsoft@gmail.com','Av 12','chia','los','cms','pah','F','A'),(8,1,'C','456','los asa','4324','a2@com','a','i','o','p','hilo','M','A'),(9,1,'C','8544','Mark','45','m@co','direcc','city','nortes','localiza','barriadas','F','A');
+INSERT INTO `clientes` VALUES (3,1,'C','38','Alvaro','311','aoc@com.co','Cll 54','Bta','Norte','Tesa','Paulo','M','A'),(5,1,'C','45877','Carmen','2524256','carmen@com.co','Cll 88','Bta','Norte','Suba','Chia','F','A'),(6,1,'C','12445','Juliana','3465','a1@com','cr 45','cali','norte','chia','chia','M','A'),(7,1,'C','123','Luis','3174142133','alvaro.oycsoft@gmail.com','Av 12','chia','los','cms','pah','M','A'),(8,1,'C','456','los asa','4324','a2@com','avenida 3 Nro 44-55','Ibague','o','p','El cairo','M','A'),(9,1,'C','8544','Mark','45','m@co','direcc','city','nortes','localiza','barriadas','F','A'),(10,1,'C','2468','Jose','2154455','aoc@com.co','Cl 87 # 44-443','Bta','','','no se','M','');
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +107,7 @@ CREATE TABLE `empresas` (
   `em_autentica` varchar(1) DEFAULT NULL,
   `em_ciudad` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +116,7 @@ CREATE TABLE `empresas` (
 
 LOCK TABLES `empresas` WRITE;
 /*!40000 ALTER TABLE `empresas` DISABLE KEYS */;
-INSERT INTO `empresas` VALUES (1,'EMPRESA DE PRUEBAS SAS','Cra 54 # 55-44','norte','teusquillo','pablo VI','132','87','mi@com','A','LAS PRUEBAS BIEN HECHAS','Dejan unos resultados visibles !!!','C','No hay mas que decir y punto','M','Bogotá');
+INSERT INTO `empresas` VALUES (1,'EMPRESA DE PRUEBAS SAS','Cra 54 # 55-44','norte al norte','teusquillo','pablo VI','132','87','mi@com','A','LAS PRUEBAS BIEN HECHAS','Dejan unos resultados visibles !!!','C','No hay mas que decir y punto','M','Bogotá');
 /*!40000 ALTER TABLE `empresas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,11 +130,15 @@ DROP TABLE IF EXISTS `imagenes`;
 CREATE TABLE `imagenes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `im_idEmpresa` int(11) DEFAULT NULL,
-  `im_producto` varchar(45) DEFAULT NULL,
-  `im_ruta` varchar(45) DEFAULT NULL,
+  `im_tipoProductoId` int(11) DEFAULT NULL,
+  `im_productoId` int(11) DEFAULT NULL,
+  `im_tipo` char(1) DEFAULT NULL,
+  `im_imagen` varchar(100) DEFAULT NULL,
+  `im_titulo` varchar(45) DEFAULT NULL,
   `im_descripcion` text,
+  `im_estado` char(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,6 +147,7 @@ CREATE TABLE `imagenes` (
 
 LOCK TABLES `imagenes` WRITE;
 /*!40000 ALTER TABLE `imagenes` DISABLE KEYS */;
+INSERT INTO `imagenes` VALUES (6,1,8,1,'P','CUCU001.png','Relojes','RELOJ DE PULSO BARATO','A'),(7,1,10,2,'P','CUCU002.jpg','Relojes','RELOJ ANALOGO DE PULSO','A'),(8,1,10,3,'P','CUCU003.jpg','Relojes','RELOJ PARA HOMBRE DE PULSO METALICO','A'),(9,1,12,4,'P','Gales.jpg','Relojes','Especial','A'),(10,1,2,5,'P','icon.png','Relojes','pruebas de cubiertas','A'),(12,1,12,4,'G','car1.jpg','Carrito','detalles del carrito','A'),(13,1,2,5,'G','mar.jpg','Imagen 01','Detalle 1 de la imagen 1','A'),(14,1,2,5,'G','mar2.png','Imagen 02','Detalle 2 de la imagen 1','A'),(15,1,2,5,'G','mar3.jpg','Imagen 03','Detalle 3 de la imagen 1','A'),(16,1,2,5,'G','mar4.jpg','Imagen 04','Detalle 4 de la imagen 1','A'),(17,1,2,5,'G','mar5.jpg','Imagen 05','Detalle 5 de la imagen 1','A'),(18,1,2,5,'G','mar8.jpg','Imagen 08','Detalle 8 de la imagen 1','A'),(19,1,2,5,'G','mar7.jpg','Imagen 07','Detalle 7 de la imagen 1','A'),(20,1,8,1,'P','cafe8.jpg','cafe 08','Detalle 8 de la imagen cafe','A'),(21,1,8,1,'G','cafe7.jpg','cafe 07','Detalle 7 de la imagen cafe','A'),(22,1,8,1,'G','cafe6.jpg','cafe 06','Detalle 6 de la imagen cafe','A'),(23,1,8,1,'G','cafe5.jpg','cafe 05','Detalle 5 de la imagen cafe','A'),(24,1,8,1,'G','cafe4.jpg','cafe 04','Detalle 4 de la imagen cafe','A'),(25,1,8,1,'G','cafe3.jpg','cafe 03','Detalle 3 de la imagen cafe','A'),(26,1,8,1,'G','cafe2.jpg','cafe 02','Detalle 2 de la imagen cafe','A'),(27,1,8,1,'G','cafe1.jpg','cafe 01','Detalle 1 de la imagen cafe','A');
 /*!40000 ALTER TABLE `imagenes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +186,7 @@ CREATE TABLE `parametros` (
 
 LOCK TABLES `parametros` WRITE;
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
-INSERT INTO `parametros` VALUES (2,1,'Alberto','www.eltiempo.com','alvarobucaros@hotmail.com','BanColombia','101004585-2','A','mujer2.png','PD00000000','FC00000000','yubr','fbk','ingr','twi',NULL,NULL);
+INSERT INTO `parametros` VALUES (2,1,'Alberto','www.eltiempo.com','alvarobucaros@hotmail.com','BanColombia','101004585-2','A','prueba1.jpg','PD00000000','FC00000000','yubr','fbk','ingr','twi',NULL,NULL);
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,13 +227,14 @@ CREATE TABLE `pedidos` (
   `ped_numero` varchar(12) DEFAULT NULL,
   `ped_fecha` datetime DEFAULT NULL,
   `ped_clienteId` int(11) DEFAULT NULL,
-  `ped_referencia1` varchar(45) DEFAULT NULL,
+  `ped_medioPago` varchar(45) DEFAULT NULL,
   `ped_estado` char(1) DEFAULT NULL,
-  `ped_nrofactura` varchar(12) DEFAULT NULL,
+  `ped_nroFactura` varchar(12) DEFAULT NULL,
   `ped_fechaFactura` datetime DEFAULT NULL,
-  `ped_vlrDespacho` varchar(45) DEFAULT NULL,
-  `ped_valoProdectos` varchar(45) DEFAULT NULL,
-  `ped_vlrIva` varchar(45) DEFAULT NULL,
+  `ped_vlrFactura` decimal(12,2) DEFAULT NULL,
+  `ped_vlrIva` decimal(12,2) DEFAULT NULL,
+  `ped_vlrNeto` decimal(12,2) DEFAULT NULL,
+  `ped_refPago` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -256,6 +262,7 @@ CREATE TABLE `productos` (
   `pr_codigo` varchar(50) DEFAULT NULL,
   `pr_descipcion` text,
   `pr_foto` varchar(100) DEFAULT NULL,
+  `pr_titulo` varchar(400) DEFAULT NULL,
   `pr_diasVenta` varchar(20) DEFAULT NULL,
   `pr_precio` decimal(10,2) DEFAULT NULL,
   `pr_inventario` int(11) DEFAULT NULL,
@@ -266,10 +273,13 @@ CREATE TABLE `productos` (
   `pr_marca` varchar(45) DEFAULT NULL,
   `pr_referencia` varchar(45) DEFAULT NULL,
   `pr_estado` varchar(1) DEFAULT NULL,
+  `pr_tipoproductoId` int(11) DEFAULT NULL,
+  `pr_ofertaDesde` date DEFAULT NULL,
+  `pr_ofertaHasta` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `pr_idEmpresa` (`pr_idEmpresa`),
   CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`pr_idEmpresa`) REFERENCES `empresas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -278,7 +288,7 @@ CREATE TABLE `productos` (
 
 LOCK TABLES `productos` WRITE;
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-INSERT INTO `productos` VALUES (1,1,'CUCU','CUCU01','RELOJ DE PULSO BARATO','CUCU001.png','0',50000.00,0,0,5000.00,0.00,19,'CUCU','R900','A'),(2,1,'CUCU','CUCU02','RELOJ ANALOGO DE PULSO','CUCU002.jpg','0',85000.00,0,0,8500.00,0.00,19,'CUCU','AS32','A'),(3,1,'CUCU','CUCU03','RELOJ PARA HOMBRE DE PULSO','CUCU003.jpg','0',55000.00,0,0,1100.00,0.00,19,'CUCU','AU32','A');
+INSERT INTO `productos` VALUES (1,1,'LICORES','TINTO','Cafe colombiano suave cultivado en la sierra de Santa Martha a 1400 mts sobre el nivel del mar, es producido con café tipo exportación secado y tostado de manera artesanal','cafe1.jpg','SUAVE COLOMBIA','T',1500.00,0,0,0.00,0.00,11,'CUCU','R900','A',8,'2020-06-01','2020-12-31'),(2,1,'RELOJES','CUCU02','RELOJ ANALOGO DE PULSO','CUCU002.jpg',NULL,'T',85000.00,0,0,0.00,0.00,19,'CUCU','AS32','A',10,'2020-06-01','2020-10-30'),(3,1,'RELOJES','CUCU03','RELOJ PARA HOMBRE DE PULSO METALICO','CUCU003.jpg',NULL,'T',55000.00,0,0,0.00,0.00,19,'CUCU','AU32','A',10,'2020-06-01','2020-12-01'),(4,1,'CARRITOS','JAWA','Jawaco especial en acero','electro1.jpg',NULL,'T',80000.00,10,5,0.00,0.00,12,'Marcado','FG99','A',12,'2020-11-11','2020-12-31'),(5,1,'JUEGOS','Juegos de PC','Aplicaciones para PC y celular','mar.jpg',NULL,'T',80000.00,0,0,0.00,0.00,16,'Product','FUGA','A',2,'2020-06-01','2020-12-31'),(6,1,'POSTRES','Tortas','Tortas y ponques en porciones individuales o la unidad completa de 12 porciones, sabores sutidos en torta blanca o tora de chocolate, o browni','postre.jpg','TORTAS','T',5000.00,0,0,0.00,15.00,16,'TOTO','T01','A',11,'2020-06-15','2020-11-01'),(7,1,'POSTRES','Postres','Postres frescos bajo en grasa y en azúcar','bizco.jpg','POSTRES','T',5000.00,0,0,0.00,0.00,0,'SIN','SIN','A',11,'2020-01-01','2020-12-31'),(8,1,'RELOJES','INVICTA','Relojería Invicta fina','dama.jpg',NULL,'T',12000.00,0,0,0.00,0.00,0,'SIN','SIN','A',11,'2020-01-31','2020-12-31'),(9,1,'FLORES','FLORES','Estas plantas tiene una edad jóven, aproximadamente 6 meses, s están sembradas en cascajo de pino ','flor.jpg','CATLEYA ROSA','T',56000.00,0,0,0.00,10.00,0,'SIN','SIN','A',10,'2020-01-01','2020-12-31'),(10,1,'LICORES','CAFE','Cafe con crema de leche','cafe2.jpg','CAFE Y CREMA','T',2200.00,0,0,0.00,0.00,11,'CUCU','R900','A',8,'2020-06-01','2020-12-31'),(11,1,'LICORES','MOCACHINO','Cafe colombiano  con chocolate en polvo Moka','cafe5.jpg','CAFE CACAO','T',2500.00,0,0,0.00,0.00,11,'CUCU','R900','A',8,'2020-06-01','2020-12-31'),(12,1,'LICORES','CAPUCHINO','Cafe colombiano suave malteado con pizcas de chocolate caucano','cafe6.jpg','CAFE ITALIANO','T',3200.00,0,0,0.00,0.00,11,'CUCU','R900','A',8,'2020-06-01','2020-12-31'),(13,1,'LICORES','CARAJILLO','Cafe colombiano suave con un toque de aguardiente de caña','cafe4.jpg','CAFE LICOR','T',2800.00,0,0,0.00,0.00,11,'CUCU','R900','A',8,'2020-06-01','2020-12-31');
 /*!40000 ALTER TABLE `productos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -338,7 +348,7 @@ CREATE TABLE `tipoproductos` (
 
 LOCK TABLES `tipoproductos` WRITE;
 /*!40000 ALTER TABLE `tipoproductos` DISABLE KEYS */;
-INSERT INTO `tipoproductos` VALUES (2,1,'ROLEX','Reloj Rolex','A'),(4,1,'OMEGA','Relojes Omega','A'),(8,1,'INVICTA','Relojería Invicta','A'),(10,1,'CUCU','Relojes Musicales muy economicos','A'),(11,1,'TOTO','La momposina ','I'),(12,1,'JAWACO','Relojes de Pared','A');
+INSERT INTO `tipoproductos` VALUES (2,1,'JUEGOS','Reloj Rolex','A'),(4,1,'FLORES','Relojes Omega Originales y Garantizados','A'),(8,1,'LICORES','Relojería Invicta','A'),(10,1,'RELOJES','Relojes Musicales muy economicos','A'),(11,1,'POSTRES','La momposina ','I'),(12,1,'CARRITOS','Relojes de Pared','A');
 /*!40000 ALTER TABLE `tipoproductos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -375,7 +385,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,1,'Toma Ignacio Acosta','tia@com','cra 5','n','t','b','C','123','123','123','A'),(2,1,'aoc','aoc@com','cra 6','norte','chapinero','Nogal','C','898779','3174140000','123','A');
+INSERT INTO `usuarios` VALUES (1,1,'Tomas Ignacio Acosta','tia@com','cra 5','n','t','b','C','123','123','900150983cd24fb0d6963f7d28e17f72','A'),(2,1,'Alvaro Ortiz','aoc@com','cra 6','norte','chapinero','Nogal','C','898779','3174140000','d07c65135b3478e63420aa39b1b028b9','A'),(3,1,'Juan Carlos Piña','juan@com','dirc','zon','loc','bar','C','4564','987','202cb962ac59075b964b07152d234b70','A');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -388,4 +398,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-02  9:08:01
+-- Dump completed on 2021-01-18 10:56:23
